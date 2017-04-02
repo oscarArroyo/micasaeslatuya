@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+        <h:head>
+            <title><ui:insert name="titulo" /></title>
+            <h:outputStylesheet name="BOOTSTRAP/css/bootstrap.css" />
+            <h:outputStylesheet name="CSS/estilos.css" />
+            <h:outputStylesheet name="CSS/css/font-awesome.css" />
+            <h:outputScript name="BOOTSTRAP/jquery-3.1.1.js"/>
+            <h:outputScript name="BOOTSTRAP/js/bootstrap.min.js"/>
+        </h:head>
+        <h:body>
+            <div id="top">
+                <ui:insert name="top">
+                    <h1>Cabecera de la página</h1>
+                </ui:insert>
+            </div>
+            <div>
+                <div id="content">
+                    <ui:insert name="content">Contenido</ui:insert>
+                </div>
+            </div>
+            <div id="bottom">
+                <ui:insert name="bottom">
+                    <h1>Pie</h1>
+                </ui:insert>
+            </div>
+        </h:body>
+</html>

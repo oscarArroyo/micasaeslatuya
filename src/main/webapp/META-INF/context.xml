@@ -1,2 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/ProyectoFinal_OscarArroyo"/>
+<Context antiJARLocking="true" docBase="ProyectoFinal_OscarArroyo" path="/ProyectoFinal_OscarArroyo">
+  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/UAU" password="2017" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/proyectofinal2017" username="java2017"/>
+</Context>
+

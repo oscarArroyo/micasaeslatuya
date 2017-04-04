@@ -12,6 +12,7 @@
         <property name="hibernate.connection.pool_size">1</property>
         <property name="hibernate.connection.datasource">java:comp/env/jdbc/UAU</property>
     
-        <mapping class="es.albarregas.beans.Cliente"/>
+        <mapping class="es.albarregas.beans.Clientes"/>
+        <mapping class="es.albarregas.beans.Usuarios"/>
     </session-factory>
 </hibernate-configuration>

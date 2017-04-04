@@ -18,6 +18,28 @@
                 </ui:define>
                 <ui:define name="content">
                     <h2>Contenido de la página</h2>
+                    <section>
+                <h:form id="formularioAdd">
+                    <h:panelGrid columns="2" cellpadding="1" border="1" width="50%" styleClass="panel">
+                        
+                        <h:outputLabel for="nombre" value="nombre"/>
+                        <h:inputText value="#{usuarios.email}" id="nombre" required="true" requiredMessage="Introduzca el nombre" />
+
+                        <h:outputLabel for="apellidos" value="pass"/>
+                        <h:inputText value="#{usuarios.password}" id="apellidos" required="true" requiredMessage="Introduzca los apellidos"/>
+
+                                     
+
+                        <f:facet name="footer">
+                            <h:panelGroup  style="display:block; text-align:center">
+                                <h:commandButton value="Añadir" action="#{usuarios.addDatos()}" styleClass="boton">
+                                   
+                                </h:commandButton>
+                            </h:panelGroup>
+                        </f:facet>
+                    </h:panelGrid>
+                </h:form>
+            </section>
                 </ui:define>
                 <ui:define name="bottom">
                     <ui:include src="/resources/include/pie.xhtml"/>

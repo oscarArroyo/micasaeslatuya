@@ -6,20 +6,28 @@
 package es.albarregas.beans;
 
 import java.io.Serializable;
+import javax.faces.bean.ManagedBean;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
  *
  * @author Oscar
  */
+@ManagedBean
 @Entity
 @Table(name = "Clientes")
 public class Clientes implements Serializable {
+
+    @OneToOne(mappedBy = "cliente")
+    @PrimaryKeyJoinColumn
+    private Usuarios usuario;
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "IdCliente")
@@ -32,6 +40,15 @@ public class Clientes implements Serializable {
     private String ape2;
     @Column(name = "Telefono")
     private String tlf;
+
+   public Usuarios getUsuario() {
+       return usuario;
+   }
+
+    public void setUsuario(Usuarios usuario) {
+        this.usuario = usuario;
+   }
+   
 
     public int getId() {
         return id;

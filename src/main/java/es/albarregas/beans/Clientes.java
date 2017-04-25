@@ -32,9 +32,11 @@ public class Clientes implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "IdCliente")
     private int id;
+    @Column (nullable = false)
     private String nif;
+    @Column (nullable = false)
     private String nombre;
-    @Column(name = "Apellido1")
+    @Column(name = "Apellido1",nullable = false) 
     private String ape1;
     @Column(name = "Apellido2")
     private String ape2;

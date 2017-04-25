@@ -8,7 +8,19 @@ package es.albarregas.beans;
 import es.albarregas.dao.IGenericoDAO;
 import es.albarregas.daofactory.DAOFactory;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
+/*import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;*/
 import javax.faces.bean.ManagedBean;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,7 +32,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Temporal;
-import javax.persistence.UniqueConstraint;
+import java.util.Date;
 
 /**
  *
@@ -29,21 +41,23 @@ import javax.persistence.UniqueConstraint;
 @ManagedBean
 @Entity
 @Table(name = "Usuarios")
-public class Usuarios implements Serializable{
+public class Usuarios implements Serializable {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "IdUsuario")
     private int id;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
-    @Column (nullable = false)
+    @Column(nullable = false)
     private String password;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date ultimoAcceso;
-    @Column (columnDefinition = "char(1) default 'n'")
+    @Column(columnDefinition = "char(1) default 'n' not null")
     private char bloqueado;
+    @Column(columnDefinition = "char(1) default 'u' not null")
     private char tipo;
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Clientes cliente;
 
@@ -54,7 +68,6 @@ public class Usuarios implements Serializable{
     public void setCliente(Clientes cliente) {
         this.cliente = cliente;
     }
-    
 
     public int getId() {
         return id;
@@ -103,6 +116,7 @@ public class Usuarios implements Serializable{
     public void setTipo(char tipo) {
         this.tipo = tipo;
     }
+
     public void oneCliente() {
         if (this.id > 0) {
             DAOFactory df = DAOFactory.getDAOFactory();
@@ -110,15 +124,76 @@ public class Usuarios implements Serializable{
             Usuarios usu = (Usuarios) igd.getOne(this.id, Usuarios.class);
             this.id = usu.getId();
             this.email = usu.getEmail();
-            this.password= usu.getPassword();
+            this.password = usu.getPassword();
         }
-        
+
     }
-     public void addDatos() {
+
+    public void addDatos() {
         DAOFactory df = DAOFactory.getDAOFactory();
         IGenericoDAO igd = df.getGenericoDAO();
+        this.setUltimoAcceso(new Date());
+        this.setTipo('u');
+        this.setBloqueado('n');
         igd.add(Usuarios.this); //Cliente.this = this
-      
-        
     }
+
+    public void login() {
+        DAOFactory df = DAOFactory.getDAOFactory();
+        IGenericoDAO igd = df.getGenericoDAO();
+        ArrayList<Usuarios> usuarios = (ArrayList<Usuarios>) igd.get("Usuarios");
+        if (!usuarios.isEmpty()) {
+            for (int i = 0; i < usuarios.size(); i++) {
+                if (this.email.equals(usuarios.get(i).getEmail()) && this.password.equals(usuarios.get(i).getPassword())) {
+                    System.out.println("Encontrado");
+                    break;
+                }else{
+                   System.out.println("No Encontrado"); 
+                }
+
+            }
+        }
+    }
+
+    /*private String encriptar(String cadena) throws UnsupportedEncodingException {
+        try {
+            KeyGenerator keygenerator = KeyGenerator.getInstance("DES");
+            SecretKey myDesKey = keygenerator.generateKey();
+
+            Cipher desCipher;
+
+            // Create the cipher
+            desCipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
+
+            // Initialize the cipher for encryption
+            desCipher.init(Cipher.ENCRYPT_MODE, myDesKey);
+
+            //sensitive information
+            byte[] text = cadena.getBytes();
+
+            // Encrypt the text
+            byte[] textEncrypted = desCipher.doFinal(text);
+
+            String value = new String(textEncrypted, "UTF-8");
+            
+            // Initialize the same cipher for decryption
+            desCipher.init(Cipher.DECRYPT_MODE, myDesKey);
+
+            // Decrypt the text
+            byte[] textDecrypted = desCipher.doFinal(textEncrypted);
+            
+            return value;
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException | BadPaddingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+     */
 }

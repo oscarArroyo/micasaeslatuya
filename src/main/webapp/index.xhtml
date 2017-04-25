@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich">
         <h:head>
            
             <ui:define name="titulo">
@@ -19,26 +20,7 @@
                 <ui:define name="content">
                     <h2>Contenido de la página</h2>
                     <section>
-                <h:form id="formularioAdd">
-                    <h:panelGrid columns="2" cellpadding="1" border="1" width="50%" styleClass="panel">
-                        
-                        <h:outputLabel for="nombre" value="nombre"/>
-                        <h:inputText value="#{usuarios.email}" id="nombre" required="true" requiredMessage="Introduzca el nombre" />
-
-                        <h:outputLabel for="apellidos" value="pass"/>
-                        <h:inputText value="#{usuarios.password}" id="apellidos" required="true" requiredMessage="Introduzca los apellidos"/>
-
-                                     
-
-                        <f:facet name="footer">
-                            <h:panelGroup  style="display:block; text-align:center">
-                                <h:commandButton value="Añadir" action="#{usuarios.addDatos()}" styleClass="boton">
-                                   
-                                </h:commandButton>
-                            </h:panelGroup>
-                        </f:facet>
-                    </h:panelGrid>
-                </h:form>
+               
             </section>
                 </ui:define>
                 <ui:define name="bottom">

@@ -33,6 +33,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Temporal;
 import java.util.Date;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -136,6 +138,7 @@ public class Usuarios implements Serializable {
         this.setTipo('u');
         this.setBloqueado('n');
         igd.add(Usuarios.this); //Cliente.this = this
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this);
     }
 
     public void login() {
@@ -146,13 +149,18 @@ public class Usuarios implements Serializable {
             for (int i = 0; i < usuarios.size(); i++) {
                 if (this.email.equals(usuarios.get(i).getEmail()) && this.password.equals(usuarios.get(i).getPassword())) {
                     System.out.println("Encontrado");
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usuarios.get(i));
                     break;
                 }else{
                    System.out.println("No Encontrado"); 
+                   FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login desconocido, intentelo otra vez"));
                 }
 
             }
         }
+    }
+    public void cerrarSesion(){
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("usuario");
     }
 
     /*private String encriptar(String cadena) throws UnsupportedEncodingException {

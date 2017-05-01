@@ -4,75 +4,64 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:rich="http://richfaces.org/rich"
       xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <header  class="cabecera">  
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <header  class="cabecera">
         <div class="container-fluid">
             <div class="row">
                 <div class=" col-sm-3 col-xs-12">
-                    <h:link outcome="index"><h:graphicImage  styleClass="logo" alt="logo ppal"  name="logos/logo.png"/> </h:link>
+                    <h:link outcome="index"><h:graphicImage  styleClass="logo" alt="logo ppal"  name="logos/logo_4.png"/> </h:link>
                 </div>
                 <div class="col-sm-offset-2 col-sm-3 col-xs-12">
+
                     <div class="lg">
-                        <div class="login">
-                       <h:commandButton value="Login">
-                            <rich:componentControl target="popupLg" operation="show" />
-                        </h:commandButton>
-                        <rich:popupPanel id="popupLg" modal="true" resizeable="true" onmaskclick="#{rich:component('popupLg')}.hide()">
-                            <f:facet name="header">
-                                <h:outputText value="Login" />
-                            </f:facet>
-                            <f:facet name="controls">
-                                <h:outputLink value="#" onclick="#{rich:component('popupLg')}.hide(); return false;" style="color: inherit">
-                                    X
-                                </h:outputLink>
-                            </f:facet>
-                            <h:form>
-                                <h:outputLabel value="Email"/>
-                                <h:message id="mensaje" errorStyle="color:red; display:block" for="email" rendered="true"/>
-                                <h:inputText id="email" required="true" value="#{usuarios.email}" requiredMessage="Por favor introduce el email."
-                                             validatorMessage="Formato de email erroneo" size="40">
-                                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                                </h:inputText>
-                                <br/>
-                                <h:outputLabel value="Password"/>
-                                <h:inputSecret value="#{usuarios.password}"/>
-                                <br/>
-                                <a4j:commandButton action="#{usuarios.login()}" value="Confirmar" render="mensaje" />
-                            </h:form>
-                        </rich:popupPanel>
-                        </div>  
-                         <div class="reg">
-                        <h:commandButton value="registro">
-                            <rich:componentControl target="popup" operation="show" />
-                        </h:commandButton>
-                        <rich:popupPanel id="popup" modal="true" resizeable="true" onmaskclick="#{rich:component('popup')}.hide()">
-                            <f:facet name="header">
-                                <h:outputText value="Registro" />
-                            </f:facet>
-                            <f:facet name="controls">
-                                <h:outputLink value="#" onclick="#{rich:component('popup')}.hide(); return false;" style="color: inherit">
-                                    X
-                                </h:outputLink>
-                            </f:facet>
-                            <h:form>
-                                <h:outputLabel value="Email"/>
-                                <h:message id="mensaje" errorStyle="color:red; display:block" for="email" rendered="true"/>
-                                <h:inputText id="email" required="true" value="#{usuarios.email}" requiredMessage="Por favor introduce el email."
-                                             validatorMessage="Formato de email erroneo" size="40">
-                                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                                </h:inputText>
-                                <br/>
-                                <h:outputLabel value="Password"/>
-                                <h:inputSecret value="#{usuarios.password}"/>
-                                <br/>
-                                <a4j:commandButton action="#{usuarios.addDatos()}" value="Confirmar" render="mensaje" />
-                            </h:form>
-                        </rich:popupPanel>
-                        </div>
+                        <c:choose>
+                            <c:when test="${usuario==null}">
+
+                                <h:form>
+                                    <h:commandButton value="Login">
+                                        <rich:componentControl target="popupLg" operation="show" />
+                                    </h:commandButton>
+                                </h:form>
+                                <rich:popupPanel id="popupLg" modal="true" resizeable="true" onmaskclick="#{rich:component('popupLg')}.hide()">
+                                    <f:facet name="header">
+                                        <h:outputText value="Login" />
+                                    </f:facet>
+                                    <f:facet name="controls">
+                                        <h:outputLink value="#" onclick="#{rich:component('popupLg')}.hide(); return false;" style="color: inherit">
+                                            X
+                                        </h:outputLink>
+                                    </f:facet>
+                                    <h:form>
+                                        <h:outputLabel value="Email"/>
+                                        <h:message id="mensaje" errorStyle="color:red; display:block" for="email" rendered="true"/>
+                                        <h:inputText id="email" required="true" value="#{usuarios.email}" requiredMessage="Por favor introduce el email."
+                                                     validatorMessage="Formato de email erroneo" size="40">
+                                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                        </h:inputText>
+                                        <br/>
+                                        <h:outputLabel value="Password"/>
+                                        <h:inputSecret value="#{usuarios.password}"/>
+                                        <br/>
+                                        <h:commandButton styleClass="btn btn-info" action="#{usuarios.login}" value="Confirmar"/>
+                                    </h:form>
+                                </rich:popupPanel>
+
+                                <h:form>
+                                    <h:commandButton value="registro" action="registro"/>
+                                </h:form>
+                            </c:when>
+                            <c:otherwise>
+                                <h:form>
+                                <i class="fa fa-user-o fa-1x" aria-hidden="true"></i>Panel del usuario: <h:outputText styleClass="text-center" value="#{usuario.email}"/><br/>
+                                <h:commandLink value="Cerrar sesion" action="#{usuarios.cerrarSesion}"><i class="fa fa-window-close-o fa-1x" aria-hidden="true"></i></h:commandLink>
+                                </h:form>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </div>
-        </div>           
+        </div>
     </header>
 </html>
 

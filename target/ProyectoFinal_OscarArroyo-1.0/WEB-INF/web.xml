@@ -21,4 +21,8 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+    <context-param>
+    <param-name>org.richfaces.skin</param-name>
+    <param-value>blueSky</param-value>
+</context-param>
 </web-app>

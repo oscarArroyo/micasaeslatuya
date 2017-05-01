@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+
+        <ui:define name="titulo">
+            <title>Indice</title>
+        </ui:define>
+    </h:head>
+    <h:body>
+        <ui:decorate template="/resources/plantillas/plantilla.xhtml">
+            <ui:define name="top">
+                <ui:include src="/resources/include/cabecera.xhtml"/>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-offset-4 col-sm-4">
+                            <div class="registro">
+                                <rich:panel header="Registro">
+                                    <h:form>
+                                        <h:messages id="mensaje" class="danger"/>  
+                                        <h:outputLabel for="email" value="Email" /><br/>
+                                        <h:inputText id="email" value="#{usuarios.email}" size="50" required="true" requiredMessage="Por favor introduzca el email"/><br/>
+                                        <h:outputLabel for="pass" value="Password"/><br/>
+                                        <h:inputSecret id="pass" validatorMessage="Password: Longitud minima 5 caracteres" value="#{usuarios.password}" size="50" required="true" requiredMessage="Por favor introduzca la contraseña">
+                                             <f:validateLength for = "pass" minimum = "5"/>
+                                        </h:inputSecret><br/>
+                                        <a4j:commandButton action="#{usuarios.addDatos}" value="Enviar" styleClass=" btn btn-info" render="mensaje"/> 
+                                    </h:form>
+                                </rich:panel>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+            <ui:define name="bottom">
+                <ui:include src="/resources/include/pie.xhtml"/>
+            </ui:define>
+        </ui:decorate>
+    </h:body>
+</html>

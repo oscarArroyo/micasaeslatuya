@@ -6,26 +6,27 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:rich="http://richfaces.org/rich">
-        <h:head>
-           
-            <ui:define name="titulo">
-                <title>Indice</title>
+    
+    <h:head>
+        
+        <ui:define name="titulo">
+            <title>Indice</title>
+        </ui:define>
+    </h:head>
+    <h:body>
+        <ui:decorate template="/resources/plantillas/plantilla.xhtml">
+            <ui:define name="top">
+                <ui:include src="/resources/include/cabecera.xhtml"/>
             </ui:define>
-        </h:head>
-        <h:body>
-            <ui:decorate template="/resources/plantillas/plantilla.xhtml">
-                <ui:define name="top">
-                    <ui:include src="/resources/include/cabecera.xhtml"/>
-                </ui:define>
-                <ui:define name="content">
-                    <h2>Contenido de la página</h2>
-                    <section>
-               
-            </section>
-                </ui:define>
-                <ui:define name="bottom">
-                    <ui:include src="/resources/include/pie.xhtml"/>
-                </ui:define>
-            </ui:decorate>
-        </h:body>
+            <ui:define name="content">
+                <h2>Contenido de la página</h2>
+                <h3>index</h3>
+                <section>
+                </section>
+            </ui:define>
+            <ui:define name="bottom">
+                <ui:include src="/resources/include/pie.xhtml"/>
+            </ui:define>
+        </ui:decorate>
+    </h:body>
 </html>

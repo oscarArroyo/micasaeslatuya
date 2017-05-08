@@ -7,20 +7,10 @@ package es.albarregas.beans;
 
 import es.albarregas.dao.IGenericoDAO;
 import es.albarregas.daofactory.DAOFactory;
+
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-/*import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;*/
 import javax.faces.bean.ManagedBean;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,6 +25,7 @@ import javax.persistence.Temporal;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import es.albarregas.utils.Utils;
 
 /**
  *
@@ -131,77 +122,46 @@ public class Usuarios implements Serializable {
 
     }
 
-    public void addDatos() {
+    public String addDatos() throws Exception {
+        FacesContext ctx = FacesContext.getCurrentInstance();
         DAOFactory df = DAOFactory.getDAOFactory();
         IGenericoDAO igd = df.getGenericoDAO();
-        this.setUltimoAcceso(new Date());
-        this.setTipo('u');
-        this.setBloqueado('n');
-        igd.add(Usuarios.this); //Cliente.this = this
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this);
-    }
-
-    public void login() {
-        DAOFactory df = DAOFactory.getDAOFactory();
-        IGenericoDAO igd = df.getGenericoDAO();
-        ArrayList<Usuarios> usuarios = (ArrayList<Usuarios>) igd.get("Usuarios");
-        if (!usuarios.isEmpty()) {
-            for (int i = 0; i < usuarios.size(); i++) {
-                if (this.email.equals(usuarios.get(i).getEmail()) && this.password.equals(usuarios.get(i).getPassword())) {
-                    System.out.println("Encontrado");
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usuarios.get(i));
-                    break;
-                }else{
-                   System.out.println("No Encontrado"); 
-                   FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login desconocido, intentelo otra vez"));
-                }
-
-            }
+        ArrayList<Usuarios> usuarios = (ArrayList<Usuarios>) igd.get("Usuarios u where u.email='" + this.getEmail() + "'");
+        if(usuarios.isEmpty()){
+            this.setPassword(Utils.encode(this.getPassword()));
+            this.setUltimoAcceso(new Date());
+            this.setTipo('u');
+            this.setBloqueado('n');
+            igd.add(Usuarios.this);
+            ctx.getExternalContext().getSessionMap().put("usuario", this);
+            return "cor";
+        }else{
+             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Email ya registrado"));
+             return null;
         }
+       
     }
-    public void cerrarSesion(){
+
+    public void login() throws IOException, Exception {
+        boolean encontrado = true;
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        DAOFactory df = DAOFactory.getDAOFactory();
+        IGenericoDAO igd = df.getGenericoDAO();
+        ArrayList<Usuarios> usuarios = (ArrayList<Usuarios>) igd.get("Usuarios u where u.email='" + this.getEmail() + "'");
+        if (!usuarios.isEmpty()) {
+            if (this.password.equals(Utils.decode(usuarios.get(0).getPassword()))) {
+                encontrado = false;
+                ctx.getExternalContext().getSessionMap().put("usuario", usuarios.get(0));
+                Utils.redirectUrlPeticion(ctx.getExternalContext().getRequestPathInfo());
+            }
+        } else if (encontrado) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login desconocido, intentelo otra vez"));
+        }
+
+    }
+
+    public void cerrarSesion() {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("usuario");
     }
 
-    /*private String encriptar(String cadena) throws UnsupportedEncodingException {
-        try {
-            KeyGenerator keygenerator = KeyGenerator.getInstance("DES");
-            SecretKey myDesKey = keygenerator.generateKey();
-
-            Cipher desCipher;
-
-            // Create the cipher
-            desCipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
-
-            // Initialize the cipher for encryption
-            desCipher.init(Cipher.ENCRYPT_MODE, myDesKey);
-
-            //sensitive information
-            byte[] text = cadena.getBytes();
-
-            // Encrypt the text
-            byte[] textEncrypted = desCipher.doFinal(text);
-
-            String value = new String(textEncrypted, "UTF-8");
-            
-            // Initialize the same cipher for decryption
-            desCipher.init(Cipher.DECRYPT_MODE, myDesKey);
-
-            // Decrypt the text
-            byte[] textDecrypted = desCipher.doFinal(textEncrypted);
-            
-            return value;
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException | BadPaddingException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-     */
 }

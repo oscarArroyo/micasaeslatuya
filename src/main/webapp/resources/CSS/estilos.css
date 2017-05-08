@@ -12,14 +12,13 @@ and open the template in the editor.
 }
 .cabecera{
     background-color: #a0a0a0;
-	width: 100%;
-	text-align: left;
-	font: bold 16px sans-serif;
+    width: 100%;
+    text-align: left;
+    font: bold 16px sans-serif;
 }
 .lg{
     margin-top: 2rem;
-    display: inline-block;
-    float:left;
+    float: left;
     margin-bottom: 2rem;
 }
 a:link{
@@ -28,6 +27,11 @@ a:link{
 
 .registro{
     margin-top: 10rem;
+}
+.btn-reg{
+    
+    margin-top: 1rem;
+ 
 }
 
 .footer-distributed{

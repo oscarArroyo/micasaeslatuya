@@ -27,13 +27,22 @@
                                 <rich:panel header="Registro">
                                     <h:form>
                                         <h:messages id="mensaje" class="danger"/>  
+                                        <div class="inp-reg-email text-center">
                                         <h:outputLabel for="email" value="Email" /><br/>
-                                        <h:inputText id="email" value="#{usuarios.email}" size="50" required="true" requiredMessage="Por favor introduzca el email"/><br/>
+                                        <h:inputText id="email" value="#{usuarios.email}" size="50" required="true" validatorMessage="Formato de email erroneo" requiredMessage="Por favor introduzca el email">
+                                            <f:validateRegex pattern="^[_A-Za-zñÑáéíóúÁÉÍÓÚ0-9-\+]+(\.[_A-Za-zñÑáéíóúÁÉÍÓÚ0-9-]+)*@[A-Za-zñÑáéíóúÁÉÍÓÚ0-9-]+(\.[A-Za-zñÑáéíóúÁÉÍÓÚ0-9]+)*(\.[A-Za-zñÑáéíóúÁÉÍÓÚ]{2,})$" />
+                                        </h:inputText>
+                                        </div>
+                                        <br/>
+                                         <div class="inp-reg-pass text-center">
                                         <h:outputLabel for="pass" value="Password"/><br/>
                                         <h:inputSecret id="pass" validatorMessage="Password: Longitud minima 5 caracteres" value="#{usuarios.password}" size="50" required="true" requiredMessage="Por favor introduzca la contraseña">
-                                             <f:validateLength for = "pass" minimum = "5"/>
-                                        </h:inputSecret><br/>
+                                            <f:validateLength for = "pass" minimum = "5"/>
+                                        </h:inputSecret>
+                                         </div><br/>
+                                        <div class="btn-reg text-center">
                                         <a4j:commandButton action="#{usuarios.addDatos}" value="Enviar" styleClass=" btn btn-info" render="mensaje"/> 
+                                        </div>
                                     </h:form>
                                 </rich:panel>
                             </div>

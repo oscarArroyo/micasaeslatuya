@@ -19,7 +19,7 @@
                             <c:when test="${usuario==null}">
 
                                 <h:form>
-                                    <h:commandButton value="Login">
+                                    <h:commandButton value="Login" class="btn btn-info">
                                         <rich:componentControl target="popupLg" operation="show" />
                                     </h:commandButton>
                                 </h:form>
@@ -32,23 +32,26 @@
                                             X
                                         </h:outputLink>
                                     </f:facet>
-                                    <h:form>
+                                    <h:form id="formulario">
+                                        <h:messages id="mensajes" errorStyle="color:red; display:block"  rendered="true"/>
+                                        <div class="text-center">
                                         <h:outputLabel value="Email"/>
-                                        <h:message id="mensaje" errorStyle="color:red; display:block" for="email" rendered="true"/>
                                         <h:inputText id="email" required="true" value="#{usuarios.email}" requiredMessage="Por favor introduce el email."
                                                      validatorMessage="Formato de email erroneo" size="40">
-                                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                             <f:validateRegex pattern="^[_A-Za-zñÑáéíóúÁÉÍÓÚ0-9-\+]+(\.[_A-Za-zñÑáéíóúÁÉÍÓÚ0-9-]+)*@[A-Za-zñÑáéíóúÁÉÍÓÚ0-9-]+(\.[A-Za-zñÑáéíóúÁÉÍÓÚ0-9]+)*(\.[A-Za-zñÑáéíóúÁÉÍÓÚ]{2,})$" />
                                         </h:inputText>
                                         <br/>
-                                        <h:outputLabel value="Password"/>
-                                        <h:inputSecret value="#{usuarios.password}"/>
-                                        <br/>
-                                        <h:commandButton styleClass="btn btn-info" action="#{usuarios.login}" value="Confirmar"/>
+                                        <h:outputLabel value="Password"/><br/>
+                                        <h:inputSecret id="pass" validatorMessage="Password: Longitud minima 5 caracteres" value="#{usuarios.password}" size="40" required="true" requiredMessage="Por favor introduzca la contraseña">
+                                            <f:validateLength for = "pass" minimum = "5"/>
+                                        </h:inputSecret><br/>
+                                        <a4j:commandButton styleClass="btn btn-info" action="#{usuarios.login}" value="Confirmar" render="mensajes" class="btn-reg btn btn-info" />
+                                        </div>
                                     </h:form>
                                 </rich:popupPanel>
-
+                                
                                 <h:form>
-                                    <h:commandButton value="registro" action="registro"/>
+                                    <h:commandButton value="Registro" action="registro" class="btn btn-info"/>
                                 </h:form>
                             </c:when>
                             <c:otherwise>

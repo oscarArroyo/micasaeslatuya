@@ -143,25 +143,25 @@ public class Usuarios implements Serializable {
     }
 
     public void login() throws IOException, Exception {
-        boolean encontrado = true;
         FacesContext ctx = FacesContext.getCurrentInstance();
         DAOFactory df = DAOFactory.getDAOFactory();
         IGenericoDAO igd = df.getGenericoDAO();
         ArrayList<Usuarios> usuarios = (ArrayList<Usuarios>) igd.get("Usuarios u where u.email='" + this.getEmail() + "'");
         if (!usuarios.isEmpty()) {
             if (this.password.equals(Utils.decode(usuarios.get(0).getPassword()))) {
-                encontrado = false;
                 ctx.getExternalContext().getSessionMap().put("usuario", usuarios.get(0));
                 Utils.redirectUrlPeticion(ctx.getExternalContext().getRequestPathInfo());
             }
-        } else if (encontrado) {
+        } else{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login desconocido, intentelo otra vez"));
         }
 
     }
 
-    public void cerrarSesion() {
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("usuario");
+    public void cerrarSesion() throws IOException {
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        ctx.getExternalContext().getSessionMap().remove("usuario");
+        Utils.redirectUrlPeticion(ctx.getExternalContext().getRequestPathInfo());
     }
 
 }

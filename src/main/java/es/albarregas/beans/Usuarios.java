@@ -26,6 +26,7 @@ import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import es.albarregas.utils.Utils;
+import javax.persistence.Transient;
 
 /**
  *
@@ -53,6 +54,18 @@ public class Usuarios implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Clientes cliente;
+    
+    @Transient
+    private String otraPass;
+
+    public String getOtraPass() {
+        return otraPass;
+    }
+
+    public void setOtraPass(String otraPass) {
+        this.otraPass = otraPass;
+    }
+    
 
     public Clientes getCliente() {
         return cliente;
@@ -147,13 +160,11 @@ public class Usuarios implements Serializable {
         DAOFactory df = DAOFactory.getDAOFactory();
         IGenericoDAO igd = df.getGenericoDAO();
         ArrayList<Usuarios> usuarios = (ArrayList<Usuarios>) igd.get("Usuarios u where u.email='" + this.getEmail() + "'");
-        if (!usuarios.isEmpty()) {
-            if (this.password.equals(Utils.decode(usuarios.get(0).getPassword()))) {
+        if (!usuarios.isEmpty() & this.password.equals(Utils.decode(usuarios.get(0).getPassword()))) {
                 ctx.getExternalContext().getSessionMap().put("usuario", usuarios.get(0));
                 Utils.redirectUrlPeticion(ctx.getExternalContext().getRequestPathInfo());
-            }
         } else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login desconocido, intentelo otra vez"));
+           ctx.addMessage("formulario:btnLog", new FacesMessage("Login desconocido, intentelo otra vez"));
         }
 
     }
@@ -161,7 +172,34 @@ public class Usuarios implements Serializable {
     public void cerrarSesion() throws IOException {
         FacesContext ctx = FacesContext.getCurrentInstance();
         ctx.getExternalContext().getSessionMap().remove("usuario");
-        Utils.redirectUrlPeticion(ctx.getExternalContext().getRequestPathInfo());
+        Utils.redirectUrlPeticion("/index.xhtml");
     }
 
+    /**
+     *
+     * @return
+     */
+    public String goPanel(){
+      return "panelUsuario";
+  
+    }
+    public void cambioPass() throws Exception{
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        DAOFactory df = DAOFactory.getDAOFactory();
+        IGenericoDAO igd = df.getGenericoDAO();
+        Usuarios usuSesion = (Usuarios)ctx.getExternalContext().getSessionMap().get("usuario");
+        if(Utils.decode(usuSesion.getPassword()).equals(this.getPassword())){
+            usuSesion.setPassword(Utils.encode(this.getOtraPass()));
+            igd.update(usuSesion);
+            ctx.getExternalContext().getSessionMap().replace("usuario",getPassword(),this.getOtraPass());
+            clear();
+            ctx.addMessage(null, new FacesMessage("Datos modificados correctamente"));
+        }else{
+            ctx.addMessage(null, new FacesMessage("La contraseña antigua no se corresponde con la indicada"));
+        }
+    }
+    public void clear(){
+        this.setOtraPass("");
+        this.setPassword("");
+    }
 }

@@ -5,8 +5,11 @@
  */
 package es.albarregas.beans;
 
+import es.albarregas.dao.IGenericoDAO;
+import es.albarregas.daofactory.DAOFactory;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -98,6 +102,18 @@ public class Clientes implements Serializable {
 
     public void setTlf(String tlf) {
         this.tlf = tlf;
+    }
+    public void addDatos(){
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        DAOFactory df = DAOFactory.getDAOFactory();
+        IGenericoDAO igd = df.getGenericoDAO();
+        HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        Usuarios usu=(Usuarios)ctx.getExternalContext().getSessionMap().get("usuario");
+        System.out.println("USUARIO ID "+usu.getId());
+        //this.setId(usu.getId());
+        igd.add(Clientes.this);
+        ctx.getExternalContext().getSessionMap().put("cliente", this);
+        
     }
     
 }

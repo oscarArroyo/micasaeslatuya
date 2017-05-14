@@ -31,7 +31,7 @@
                                         </h:outputLink>
                                     </f:facet>
                                     <h:form id="formulario">
-                                        <h:messages id="mensajes" errorStyle="color:red; display:block"  rendered="true"/>
+                                        <h:messages id="mensajes" errorStyle="color:red; display:block"  rendered="true" layout="table"/>
                                         <div class="text-center">
                                             <h:outputLabel value="Email"/>
                                             <h:inputText id="email" required="true" value="#{usuarios.email}" requiredMessage="Por favor introduce el email."
@@ -43,7 +43,8 @@
                                             <h:inputSecret id="pass" validatorMessage="Password: Longitud minima 5 caracteres" value="#{usuarios.password}" size="40" required="true" requiredMessage="Por favor introduzca la contraseña">
                                                 <f:validateLength for = "pass" minimum = "5"/>
                                             </h:inputSecret><br/>
-                                            <a4j:commandButton styleClass="btn btn-info" action="#{usuarios.login}" value="Confirmar" render="mensajes" class="btn-reg btn btn-info" />
+                                            <a4j:commandButton id="btnLog" action="#{usuarios.login}" value="Confirmar" render="mensajes" class="btn-reg btn btn-info" />
+                                            <h:message for="btnLog" />
                                         </div>
                                     </h:form>
                                 </rich:popupPanel>
@@ -58,7 +59,7 @@
                         <c:otherwise>
                             <h:form>
                                 <div class="col-sm-offset-6 col-sm-2 col-xs-6 lg">
-                                    <a4j:commandButton styleClass="text-center btn btn-info" value=" Panel de usuario de: #{usuario.email}"/>
+                                    <h:commandButton action="#{usuarios.goPanel}" styleClass="text-center btn btn-info" value=" Panel de usuario de: #{usuario.email}"/>
                                 </div>
                                 </h:form>
                             <h:form>

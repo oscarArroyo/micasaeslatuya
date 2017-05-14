@@ -5,6 +5,5 @@ Proyecto final de Oscar Arroyo León
 25/04/2017
 - Añadidas dependencias de richfaces,  metodo login y registro . Falta depurar las vistas.
 - Añadida la clase utils y el bean Imagenes
-14/05/2017
-- Añadido panel de control del usuario
+- Añadido panel de control del usuario 14/05/2017
 # micasaeslatuya

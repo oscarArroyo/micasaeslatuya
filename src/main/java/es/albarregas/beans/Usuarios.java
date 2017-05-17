@@ -141,15 +141,24 @@ public class Usuarios implements Serializable {
         IGenericoDAO igd = df.getGenericoDAO();
         ArrayList<Usuarios> usuarios = (ArrayList<Usuarios>) igd.get("Usuarios u where u.email='" + this.getEmail() + "'");
         if(usuarios.isEmpty()){
+            System.out.println("ID "+this.getId());
             this.setPassword(Utils.encode(this.getPassword()));
             this.setUltimoAcceso(new Date());
             this.setTipo('u');
             this.setBloqueado('n');
             igd.add(Usuarios.this);
             ctx.getExternalContext().getSessionMap().put("usuario", this);
+            Clientes cli = new Clientes();
+            cli.setId(this.getId());
+            cli.setNombre("");
+            cli.setApe1("");
+            cli.setNif("");
+            cli.setTlf("");
+            igd.add(cli);
+            ctx.getExternalContext().getSessionMap().put("cliente", cli);
             return "cor";
         }else{
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Email ya registrado"));
+             ctx.addMessage("formularioReg:btnReg", new FacesMessage("Email ya registrado"));
              return null;
         }
        
@@ -160,8 +169,10 @@ public class Usuarios implements Serializable {
         DAOFactory df = DAOFactory.getDAOFactory();
         IGenericoDAO igd = df.getGenericoDAO();
         ArrayList<Usuarios> usuarios = (ArrayList<Usuarios>) igd.get("Usuarios u where u.email='" + this.getEmail() + "'");
-        if (!usuarios.isEmpty() & this.password.equals(Utils.decode(usuarios.get(0).getPassword()))) {
+        if (!usuarios.isEmpty() && this.password.equals(Utils.decode(usuarios.get(0).getPassword()))) {
+                Clientes cli = (Clientes)igd.getOne(usuarios.get(0).getId(), Clientes.class);
                 ctx.getExternalContext().getSessionMap().put("usuario", usuarios.get(0));
+                ctx.getExternalContext().getSessionMap().put("cliente",cli);
                 Utils.redirectUrlPeticion(ctx.getExternalContext().getRequestPathInfo());
         } else{
            ctx.addMessage("formulario:btnLog", new FacesMessage("Login desconocido, intentelo otra vez"));
@@ -172,6 +183,7 @@ public class Usuarios implements Serializable {
     public void cerrarSesion() throws IOException {
         FacesContext ctx = FacesContext.getCurrentInstance();
         ctx.getExternalContext().getSessionMap().remove("usuario");
+        ctx.getExternalContext().getSessionMap().remove("cliente");
         Utils.redirectUrlPeticion("/index.xhtml");
     }
 

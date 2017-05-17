@@ -33,7 +33,6 @@ public class Clientes implements Serializable {
     @PrimaryKeyJoinColumn
     private Usuarios usuario;
     @Id
-    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "IdCliente")
     private int id;
     @Column (nullable = false)
@@ -107,13 +106,11 @@ public class Clientes implements Serializable {
         FacesContext ctx = FacesContext.getCurrentInstance();
         DAOFactory df = DAOFactory.getDAOFactory();
         IGenericoDAO igd = df.getGenericoDAO();
-        HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
         Usuarios usu=(Usuarios)ctx.getExternalContext().getSessionMap().get("usuario");
-        System.out.println("USUARIO ID "+usu.getId());
-        //this.setId(usu.getId());
-        igd.add(Clientes.this);
-        ctx.getExternalContext().getSessionMap().put("cliente", this);
-        
+        this.setId(usu.getId());
+        System.out.println(this.nombre);
+        igd.update(Clientes.this);
+        ctx.getExternalContext().getSessionMap().replace("cliente", this);
     }
     
 }

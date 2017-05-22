@@ -29,45 +29,23 @@
                                         <f:facet name="header">
                                             Datos personales 
                                         </f:facet>
-
                                         <div class="text-center">
-                                            <c:choose>
-                                                <c:when test="#{cliente.nombre==null}">
-                                                    <h:form>
-                                                        <h:outputLabel value="NIF: "/><br/>
-                                                        <h:inputText required="true" requiredMessage="Por favor, introduzca su NIF"  value="#{clientes.nif}" size="60"/><br/>
-                                                        <h:outputLabel value="Nombre: "/><br/>
-                                                        <h:inputText required="true" requiredMessage="Por favor, introduzca su nombre" value="#{clientes.nombre}" size="60"/><br/>
-                                                        <h:outputLabel  value="Primer apellido: "/><br/>
-                                                        <h:inputText required="true" requiredMessage="Por favor, introduzca su primerApellido" value="#{clientes.ape1}" size="60"/><br/>
-                                                        <h:outputLabel value="Segundo apellido: "/><br/>
-                                                        <h:inputText value="#{clientes.ape2}"  size="60"/><br/>
-                                                        <h:outputLabel value="Teléfono: "/><br/>
-                                                        <h:inputText required="true" requiredMessage="Por favor, introduzca su teléfono" value="#{clientes.tlf}" size="60"/><br/>
-                                                        <div class="pan-bot">
-                                                            <a4j:commandButton  action="#{clientes.addDatos}" value="Enviar"/>
-                                                        </div>
-                                                    </h:form>
-                                                </c:when>
-                                                <c:otherwise>.
-                                                    <h:form>
-                                                        <h:outputLabel value="NIF: "/><br/>
-                                                        <h:inputText required="true" requiredMessage="Por favor, introduzca su NIF"  value="#{cliente.nif}" size="60"/><br/>
-                                                        <h:outputLabel value="Nombre: "/><br/>
-                                                        <h:inputText required="true" requiredMessage="Por favor, introduzca su nombre" value="#{cliente.nombre}" size="60"/><br/>
-                                                        <h:outputLabel  value="Primer apellido: "/><br/>
-                                                        <h:inputText required="true" requiredMessage="Por favor, introduzca su primerApellido" value="#{cliente.ape1}" size="60"/><br/>
-                                                        <h:outputLabel value="Segundo apellido: "/><br/>
-                                                        <h:inputText value="#{cliente.ape2}"  size="60"/><br/>
-                                                        <h:outputLabel value="Teléfono: "/><br/>
-                                                        <h:inputText required="true" requiredMessage="Por favor, introduzca su teléfono" value="#{cliente.tlf}" size="60"/><br/>
-                                                        <input type="hidden" name="datos" value="datos"/>
-                                                        <div class="pan-bot">
-                                                            <a4j:commandButton  action="#{clientes.addDatos}" value="Enviar"/>
-                                                        </div>
-                                                    </h:form>
-                                                </c:otherwise>
-                                            </c:choose>
+                                            <h:form id="formularioClientes">
+                                                <h:messages id="mensajes" errorStyle="color:red; display:block" rendered="true"/>
+                                                <h:outputLabel value="NIF: "/><br/>
+                                                <h:inputText required="true" requiredMessage="Por favor, introduzca su NIF"  value="#{cliente.nif}" size="60"/><br/>
+                                                <h:outputLabel value="Nombre: "/><br/>
+                                                <h:inputText required="true" requiredMessage="Por favor, introduzca su nombre" value="#{cliente.nombre}" size="60"/><br/>
+                                                <h:outputLabel  value="Primer apellido: "/><br/>
+                                                <h:inputText required="true" requiredMessage="Por favor, introduzca su primerApellido" value="#{cliente.ape1}" size="60"/><br/>
+                                                <h:outputLabel value="Segundo apellido: "/><br/>
+                                                <h:inputText value="#{cliente.ape2}"  size="60"/><br/>
+                                                <h:outputLabel value="Teléfono: "/><br/>
+                                                <h:inputText required="true" requiredMessage="Por favor, introduzca su teléfono" value="#{cliente.tlf}" size="60"/><br/>
+                                                <div class="pan-bot">
+                                                    <a4j:commandButton id="datos" action="#{clientes.addDatos}" render="mensajes" value="Enviar"/>
+                                                </div>
+                                            </h:form>
                                         </div>
                                     </rich:accordionItem>
                                     <rich:accordionItem name="cambiarPass">
@@ -76,7 +54,7 @@
                                         </f:facet>
                                         <h:form>
                                             <div class="text-center">
-                                                <h:messages id="mensajes" errorStyle="color:red; display:block"  rendered="true"/>
+                                                <h:messages id="mensajes" errorStyle="color:red; display:block" rendered="true"/>
                                                 <h:outputLabel value="Introduce tu contraseña anterior"/><br/>
                                                 <h:inputSecret required="true" requiredMessage="Por favor, introduzca su vieja contraseña" value="#{usuarios.password}"/><br/>
                                                 <h:outputLabel value="Introduce tu contraseña nueva"/><br/>

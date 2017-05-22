@@ -8,6 +8,8 @@ package es.albarregas.beans;
 import es.albarregas.dao.IGenericoDAO;
 import es.albarregas.daofactory.DAOFactory;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.persistence.Column;
@@ -18,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -46,6 +49,18 @@ public class Clientes implements Serializable {
     @Column(name = "Telefono")
     private String tlf;
 
+    @Transient
+    private Clientes cliente;
+
+    public Clientes getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Clientes cliente) {
+        this.cliente = cliente;
+    }
+    
+    
    public Usuarios getUsuario() {
        return usuario;
    }
@@ -102,15 +117,23 @@ public class Clientes implements Serializable {
     public void setTlf(String tlf) {
         this.tlf = tlf;
     }
+    
+   // @PostConstruct
+   /* public void init(){
+        System.out.println("Entro init");
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        cliente = (Clientes)ctx.getExternalContext().getSessionMap().get("cliente");
+    }*/
     public void addDatos(){
         FacesContext ctx = FacesContext.getCurrentInstance();
         DAOFactory df = DAOFactory.getDAOFactory();
         IGenericoDAO igd = df.getGenericoDAO();
         Usuarios usu=(Usuarios)ctx.getExternalContext().getSessionMap().get("usuario");
-        this.setId(usu.getId());
-        System.out.println(this.nombre);
-        igd.update(Clientes.this);
-        ctx.getExternalContext().getSessionMap().replace("cliente", this);
+        cliente = (Clientes)ctx.getExternalContext().getSessionMap().get("cliente");
+        cliente.setId(usu.getId());
+        igd.update(cliente);
+        ctx.getExternalContext().getSessionMap().replace("cliente", cliente);
+        ctx.addMessage("formularioCliente:datos", new FacesMessage("Datos modificados correctamente"));
     }
     
 }

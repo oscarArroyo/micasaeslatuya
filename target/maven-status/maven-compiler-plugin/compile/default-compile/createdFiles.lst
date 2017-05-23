@@ -1,11 +1,11 @@
 es\albarregas\daofactory\MySQLDAOFactory.class
-es\albarregas\beans\Clientes.class
 es\albarregas\beans\PrefCliente.class
 es\albarregas\dao\IGenericoDAO.class
 es\albarregas\daofactory\DAOFactory.class
+es\albarregas\beans\Imagenes.class
+es\albarregas\persistencia\HibernateUtil.class
+es\albarregas\beans\Clientes.class
 es\albarregas\utils\Utils.class
 es\albarregas\dao\GenericoDAO.class
-es\albarregas\beans\Imagenes.class
 es\albarregas\beans\Preferencias.class
 es\albarregas\beans\Usuarios.class
-es\albarregas\persistencia\HibernateUtil.class

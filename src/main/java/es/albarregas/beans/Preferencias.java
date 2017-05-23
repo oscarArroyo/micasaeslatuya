@@ -6,6 +6,7 @@
 package es.albarregas.beans;
 
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,9 +19,9 @@ import javax.persistence.Table;
  *
  * @author Oscar
  */
-@ManagedBean
 @Entity
 @Table(name = "Preferencias")
+
 public class Preferencias implements Serializable{
     @Id
     @GeneratedValue(strategy = IDENTITY)

@@ -63,6 +63,16 @@
                                             </div>
                                         </h:form>
                                     </rich:accordionItem>
+                                    <rich:accordionItem name="Preferencias">
+                                        <f:facet name="header">
+                                            Preferencias
+                                        </f:facet>
+                                        <h:form>
+                                            <h:selectBooleanCheckbox onclick="#{panelControl.insertPreferenciasUsuario}" value="prueba">
+                                                <a4j:ajax event="onchange" />
+                                            </h:selectBooleanCheckbox
+                                        </h:form>
+                                    </rich:accordionItem>
                                 </rich:accordion>
                             </h:form>
                         </div>

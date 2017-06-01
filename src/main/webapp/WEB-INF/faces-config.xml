@@ -22,11 +22,17 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/*.xhtml</from-view-id>
+        <from-view-id>/cabecera.xhtml</from-view-id>
         <navigation-case>
             <from-action>#{usuarios.goPanel}</from-action>
             <from-outcome>panelUsuario</from-outcome>
             <to-view-id>/panelUsuario.xhtml</to-view-id>
+            <redirect/> 
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{usuarios.crearVivienda}</from-action>
+            <from-outcome>crearVivienda</from-outcome>
+            <to-view-id>/crearVivienda.xhtml</to-view-id>
             <redirect/> 
         </navigation-case>
     </navigation-rule>

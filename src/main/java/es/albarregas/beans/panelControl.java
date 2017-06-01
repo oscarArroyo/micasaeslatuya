@@ -10,9 +10,9 @@ import es.albarregas.daofactory.DAOFactory;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 
 /**
@@ -27,6 +27,24 @@ public class panelControl implements Serializable{
     
     private ArrayList<Preferencias> listaPref;
     private ArrayList<Preferencias> prefSeleccionadas;
+    private Boolean check;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Boolean getCheck() {
+        return check;
+    }
+
+    public void setCheck(Boolean check) {
+        this.check = check;
+    }
 
     public ArrayList<Preferencias> getPrefSeleccionadas() {
         return prefSeleccionadas;
@@ -56,11 +74,23 @@ public class panelControl implements Serializable{
         DAOFactory df = DAOFactory.getDAOFactory();
         IGenericoDAO igd = df.getGenericoDAO();
         setListaPref((ArrayList<Preferencias>)igd.get("Preferencias"));
+        setCheck(Boolean.FALSE);
+        setId(0);
     }
-    public void insertPreferenciasUsuario(){
+    public void insertPreferenciasUsuario(int id){
+        FacesContext ctx = FacesContext.getCurrentInstance();
         DAOFactory df = DAOFactory.getDAOFactory();
         IGenericoDAO igd = df.getGenericoDAO();
-        //System.out.println("this.value "+value);
-        
+        Clientes cli =(Clientes)ctx.getExternalContext().getSessionMap().get("cliente");
+        if(getCheck()){ 
+            PrefCliente prefCliente = new PrefCliente();
+            prefCliente.setIdPreferencia(id);
+            prefCliente.setValor('s');
+            prefCliente.setIdCliente(cli.getId());
+            igd.add(prefCliente);
+        }else{
+            ArrayList<PrefCliente> borrarPref = (ArrayList<PrefCliente>)igd.get("PrefCliente where idCliente="+cli.getId()+" and idPreferencia="+id);
+            igd.delete(borrarPref.get(0));
+        }
     }
 }

@@ -57,7 +57,12 @@
                         </c:when>
                         <c:otherwise>
                             <h:form>
-                                <div class="col-sm-offset-6 col-sm-2 col-xs-6 lg">
+                                <div class="col-sm-offset-5 col-sm-1 col-xs-4 lg">
+                                    <h:commandButton action="#{usuarios.crearVivienda}" styleClass="text-center btn btn-info" value="Crear vivienda"/>
+                                </div>
+                                </h:form>
+                            <h:form>
+                                <div class="col-sm-2 col-xs-4 lg">
                                     <h:commandButton action="#{usuarios.goPanel}" styleClass="text-center btn btn-info" value=" Panel de usuario de: #{usuario.email}"/>
                                 </div>
                                 </h:form>

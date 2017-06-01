@@ -31,7 +31,7 @@
     </context-param>
     <context-param>
         <param-name>maxRequestSize</param-name>
-        <param-value>100000</param-value>
+        <param-value>10000000</param-value>
     </context-param>
     
 </web-app>

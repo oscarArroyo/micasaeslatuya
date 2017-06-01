@@ -68,9 +68,22 @@
                                             Preferencias
                                         </f:facet>
                                         <h:form>
-                                            <h:selectBooleanCheckbox onclick="#{panelControl.insertPreferenciasUsuario}" value="prueba">
-                                                <a4j:ajax event="onchange" />
-                                            </h:selectBooleanCheckbox
+                                            <a4j:repeat value="#{panelControl.listaPref}" var="pref" rows="30" id="repeat">
+                                                <rich:panel styleClass="pan-pref">
+                                                    <f:facet name="header">
+                                                        <h:panelGroup>
+                                                            <div class="text-center">
+                                                            <h:outputText value="#{pref.nombre}" style="font-weight:bold;"/>
+                                                            </div>
+                                                        </h:panelGroup>
+                                                    </f:facet>
+                                                    <h:panelGrid columns="1">
+                                                        <h:selectBooleanCheckbox style="margin-left: 7rem" value="1" >
+                                                            <a4j:ajax event="change" execute="@this" listener="#{panelControl.insertPreferenciasUsuario(pref.id)}"/>
+                                                        </h:selectBooleanCheckbox>
+                                                    </h:panelGrid>
+                                                </rich:panel>
+                                            </a4j:repeat>
                                         </h:form>
                                     </rich:accordionItem>
                                 </rich:accordion>

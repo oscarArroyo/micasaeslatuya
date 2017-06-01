@@ -6,8 +6,6 @@
 package es.albarregas.beans;
 
 import java.io.Serializable;
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

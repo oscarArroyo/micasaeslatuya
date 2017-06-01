@@ -55,6 +55,7 @@ public class Usuarios implements Serializable {
     @PrimaryKeyJoinColumn
     private Clientes cliente;
     
+    
     @Transient
     private String otraPass;
 
@@ -141,7 +142,6 @@ public class Usuarios implements Serializable {
         IGenericoDAO igd = df.getGenericoDAO();
         ArrayList<Usuarios> usuarios = (ArrayList<Usuarios>) igd.get("Usuarios u where u.email='" + this.getEmail() + "'");
         if(usuarios.isEmpty()){
-            System.out.println("ID "+this.getId());
             this.setPassword(Utils.encode(this.getPassword()));
             this.setUltimoAcceso(new Date());
             this.setTipo('u');
@@ -195,6 +195,9 @@ public class Usuarios implements Serializable {
       return "panelUsuario";
   
     }
+    public String crearVivienda(){
+    return "crearVivienda";
+}
     public void cambioPass() throws Exception{
         FacesContext ctx = FacesContext.getCurrentInstance();
         DAOFactory df = DAOFactory.getDAOFactory();

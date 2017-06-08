@@ -41,6 +41,11 @@
             <artifactId>richfaces</artifactId>
             <version>4.5.17.Final</version>
         </dependency>
+        <dependency>
+  <groupId>javax.servlet</groupId>
+  <artifactId>jstl</artifactId>
+  <version>1.1.2</version>
+</dependency>
     </dependencies>
 
     <build>

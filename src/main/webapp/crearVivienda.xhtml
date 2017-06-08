@@ -27,7 +27,7 @@
                                         <tr>
                                             <td colspan="2">
                                                 <rich:fileUpload
-                                                    style="width: 100%"
+                                                    style="width: 100%" 
                                                     id="upload"
                                                     maxFilesQuantity="6"
                                                     listHeight="300px"
@@ -42,11 +42,12 @@
                                                     noDuplicate="true"
                                                     sizeExceededLabel="Tamaño máximo excedido"
                                                     addLabel="Añadir"/>
+                                                <rich:message for="upload" ajaxRendered="true" />
                                             </td>                                      
                                         </tr>
                                         <tr>
                                             <td><h:outputLabel value="Tipo de vivienda"/></td>
-                                            <td> <rich:message for="tipo" ajaxRendered="true" />
+                                            <td><rich:message for="tipo" ajaxRendered="true" />
                                                 <rich:select id="tipo" required="true" requiredMessage="Por favor, seleccione un tipo" value="#{crearVivienda.vivienda.tipo}">
                                                     <f:selectItem itemValue="Piso" itemLabel="Piso"/>
                                                     <f:selectItem itemValue="Apartamento" itemLabel="Apartamento"/>
@@ -57,12 +58,12 @@
                                                     <f:selectItem itemValue="Chalet" itemLabel="Chalet" />
                                                     <f:selectItem itemValue="Casa adosada" itemLabel="Casa adosada" />
                                                 </rich:select>
-                                           </td>                                    
+                                            </td>                                    
                                         </tr>
                                         <tr>
                                             <td><h:outputLabel value="Superficie"/></td>
                                             <td><rich:message for="superficie" ajaxRendered="true" />
-                                                <h:inputText id="superficie" required="true" requiredMessage="Por favor, introduzca un valor" value="#{crearVivienda.vivienda.m2}" >
+                                                <h:inputText class="form-control" maxlength="4" validatorMessage="Solo digitos" id="superficie" required="true" requiredMessage="Por favor, introduzca un valor" value="#{crearVivienda.vivienda.m2}" >
                                                     <f:validateRegex pattern="[0-9]{2,4}" />
                                                     <rich:placeholder value="m2"/>
                                                     <a4j:ajax/>
@@ -82,7 +83,7 @@
                                         <tr>
                                             <td><h:outputLabel value="Baños"/></td>
                                             <td><rich:message for="baños" ajaxRendered="true" />
-                                                <rich:select id="baños" required="true" requiredMessage="Por favor, seleccione un valor" value="#{crearVivienda.vivienda.baños}">
+                                                <rich:select style="width: 100%" id="baños" required="true" requiredMessage="Por favor, seleccione un valor" value="#{crearVivienda.vivienda.baños}">
                                                     <f:selectItem itemValue="1" itemLabel="1"/>
                                                     <f:selectItem itemValue="2" itemLabel="2"/>
                                                     <f:selectItem itemValue="3" itemLabel="3 o más" />
@@ -92,7 +93,7 @@
                                         <tr>
                                             <td><h:outputLabel value="Direccion"/></td>
                                             <td><rich:message for="direccion" ajaxRendered="true" />
-                                                <h:inputText id="direccion" required="true" requiredMessage="Por favor, introduce tu direccion" value="#{crearVivienda.vivienda.direccion}">
+                                                <h:inputText class="form-control" size="60" id="direccion" required="true" requiredMessage="Por favor, introduce tu direccion" value="#{crearVivienda.vivienda.direccion}">
                                                     <rich:placeholder value="Calle"/>
                                                     <a4j:ajax/>
                                                 </h:inputText></td>                                      
@@ -100,7 +101,7 @@
                                         <tr>
                                             <td><h:outputLabel value="Número"/></td>
                                             <td><rich:message for="numero" ajaxRendered="true" />
-                                                <h:inputText id="numero" required="true" requiredMessage="Por favor, introduce tu portal/escalera" value="#{crearVivienda.vivienda.numero}">
+                                                <h:inputText class="form-control" id="numero" required="true" requiredMessage="Por favor, introduce tu portal/escalera" value="#{crearVivienda.vivienda.numero}">
                                                     <rich:placeholder rendered="true" value="Portal/Escalera"/>
                                                     <a4j:ajax/>
                                                 </h:inputText></td>                                      
@@ -108,7 +109,7 @@
                                         <tr>
                                             <td><h:outputLabel value="Código Postal"/></td>
                                             <td><rich:message for="cp" ajaxRendered="true" />
-                                                <h:inputText validatorMessage="5 digitos" id="cp" required="true" requiredMessage="Por favor, introduce un código postal" value="#{crearVivienda.pueblo.nombre}">
+                                                <h:inputText class="form-control" validatorMessage="Por favor, introduce 5 digitos" id="cp" required="true" requiredMessage="Por favor, introduce un código postal" value="#{crearVivienda.pueblo.nombre}">
                                                     <rich:placeholder value="Código Postal"/>
                                                     <f:validateRegex pattern="[0-9]{5}"/>
                                                     <a4j:ajax render="pue" event="keyup" execute="@this" listener="#{crearVivienda.buscarPoblacion}"/>
@@ -116,24 +117,23 @@
                                         </tr>
                                         <tr>
                                             <td><h:outputLabel value="Poblacion"/></td>
-                                            <td><h:inputText id="pue" rendered="true" readonly="true" value="#{crearVivienda.poblacion}">
+                                            <td><h:inputText class="form-control" id="pue" rendered="true" readonly="true" value="#{crearVivienda.vivienda.localidad}">
                                                 </h:inputText></td>                                      
                                         </tr>
                                         <tr>
                                             <td><h:outputLabel value="Comentarios"/></td>
                                             <td><rich:message for="comentarios" ajaxRendered="true" />
-                                                <h:inputTextarea id="comentarios" requiredMessage="Por favor, introduce un comentario" required="true" cols="60" rows="10" value="#{crearVivienda.vivienda.comentarios}">
+                                                <h:inputTextarea class="form-control" id="comentarios" requiredMessage="Por favor, introduce un comentario" required="true" cols="60" rows="10" value="#{crearVivienda.vivienda.comentarios}">
                                                     <rich:placeholder value="Comentarios referentes a la vivienda"/>
                                                     <a4j:ajax/>
                                                 </h:inputTextarea></td>                                      
                                         </tr> 
                                         <tr>
-                                            <td><a4j:commandButton render="mensajes" value="Enviar" action="#{crearVivienda.addDatos}"/></td>
-                                            <td><a4j:commandButton value="Limpiar" immediate="true" type="reset"/>  </td>                                  
+                                            <td><a4j:commandButton class="btn btn-info" render="mensajes" value="Enviar" action="#{crearVivienda.addDatos}"/></td>
+                                            <td><a4j:commandButton class="btn btn-info" value="Limpiar" immediate="true" type="reset"/>  </td>                                  
                                         </tr> 
                                     </tbody>
                                 </table>
-
                             </h:form>
                         </div>
                     </div>

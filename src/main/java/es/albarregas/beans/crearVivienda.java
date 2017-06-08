@@ -22,6 +22,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 import org.richfaces.event.FileUploadEvent;
@@ -33,7 +34,7 @@ import org.richfaces.model.UploadedFile;
  * @author Oscar
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class crearVivienda implements Serializable{
     private ArrayList<Imagenes> arrImagenes;
     private Pueblos pueblo;
@@ -84,13 +85,11 @@ public class crearVivienda implements Serializable{
             DAOFactory df = DAOFactory.getDAOFactory();
             IGenericoDAO igd = df.getGenericoDAO();
             UploadedFile item = event.getUploadedFile();
-
             Blob blob = new javax.sql.rowset.serial.SerialBlob(item.getData());
                 imagenes.setTipoMime(item.getFileExtension());
                 imagenes.setIdV(1);
                 imagenes.setImagen(blob);  
                 getArrImagenes().add(imagenes);
-
         } catch (FileUploadException | SQLException e) {
             e.printStackTrace();
             throw new Exception(e);
@@ -98,32 +97,35 @@ public class crearVivienda implements Serializable{
 
         return null;
     }
-     public String buscarPoblacion(){
+     public void buscarPoblacion(){
         DAOFactory df = DAOFactory.getDAOFactory();
         IGenericoDAO igd = df.getGenericoDAO();
         FacesContext ctx = FacesContext.getCurrentInstance();
         ArrayList<Pueblos> puebloCod =(ArrayList<Pueblos>) igd.get("Pueblos where codPostal='"+getPueblo().getNombre()+"'");
         if(puebloCod.size()>0){
             poblacion=puebloCod.get(0).getNombre();
-            return poblacion;
+            getVivienda().setLocalidad(poblacion);
+        }else{
+            ctx.addMessage("formCrearVivienda:cp", new FacesMessage("Código postal desconocido, intentelo otra vez"));
         }
-         ctx.addMessage("formCrearVivienda:cp", new FacesMessage("Código postal desconocido, intentelo otra vez"));
-         return null;
      }
      public String addDatos(){
-        getVivienda().setLocalidad(poblacion);
         FacesContext ctx = FacesContext.getCurrentInstance();
-        Clientes cliente = (Clientes)ctx.getExternalContext().getSessionMap().get("cliente");
-         System.out.println(""+cliente.getId());
-        getVivienda().setIdCliente(cliente.getId());
-         System.out.println("es.albarregas.beans.crearVivienda.addDatos()" + getVivienda().getIdCliente());
-         System.out.println("es.albarregas.beans.crearVivienda.addDatos()" + getVivienda().getLocalidad());
+        if(getArrImagenes().size()>=3){
         DAOFactory df = DAOFactory.getDAOFactory();
         IGenericoDAO igd = df.getGenericoDAO();
+        Clientes cliente = (Clientes)ctx.getExternalContext().getSessionMap().get("cliente");
+        getVivienda().setIdCliente(cliente.getId());
         igd.add(getVivienda());
-         
-         System.out.println("es.albarregas.beans.crearVivienda.addDatos() "+getArrImagenes().size());
-         return null;
+        ArrayList<Viviendas>idV =(ArrayList<Viviendas>)igd.get("Viviendas v where v.idCliente="+getVivienda().getIdCliente()+" AND v.direccion='"+getVivienda().getDireccion()+"' AND v.numero='"+getVivienda().getNumero()+"'");
+        for(int i=0;i<getArrImagenes().size();i++){
+            arrImagenes.get(i).setIdV(idV.get(0).getId());
+            igd.add(arrImagenes.get(i));
+        }
+        }else{
+            ctx.addMessage("formCrearVivienda:upload", new FacesMessage("Debes subir al menos tres imágenes"));
+        }
+        return null;
      }
        /* public void paint(OutputStream out, Object data) throws IOException, SQLException {
             DAOFactory df = DAOFactory.getDAOFactory();

@@ -21,7 +21,7 @@
                                         <rich:componentControl target="popupLg" operation="show" />
                                     </h:commandButton>
                                 </h:form>
-                                <rich:popupPanel id="popupLg" modal="true" resizeable="true" onmaskclick="#{rich:component('popupLg')}.hide()">
+                                <rich:popupPanel id="popupLg" modal="true" height="225" width="500" resizeable="true" onmaskclick="#{rich:component('popupLg')}.hide()">
                                     <f:facet name="header">
                                         <h:outputText value="Login" />
                                     </f:facet>
@@ -34,13 +34,13 @@
                                         <h:messages id="mensajes" errorStyle="color:red; display:block"  rendered="true" layout="table"/>
                                         <div class="text-center">
                                             <h:outputLabel value="Email"/>
-                                            <h:inputText id="email" required="true" value="#{usuarios.email}" requiredMessage="Por favor introduce el email."
+                                            <h:inputText class="form-control" id="email" required="true" value="#{usuarios.email}" requiredMessage="Por favor introduce el email."
                                                          validatorMessage="Formato de email erroneo" size="40">
                                                 <f:validateRegex pattern="^[_A-Za-zñÑáéíóúÁÉÍÓÚ0-9-\+]+(\.[_A-Za-zñÑáéíóúÁÉÍÓÚ0-9-]+)*@[A-Za-zñÑáéíóúÁÉÍÓÚ0-9-]+(\.[A-Za-zñÑáéíóúÁÉÍÓÚ0-9]+)*(\.[A-Za-zñÑáéíóúÁÉÍÓÚ]{2,})$" />
                                             </h:inputText>
                                             <br/>
                                             <h:outputLabel value="Password"/><br/>
-                                            <h:inputSecret id="pass" validatorMessage="Password: Longitud minima 5 caracteres" value="#{usuarios.password}" size="40" required="true" requiredMessage="Por favor introduzca la contraseña">
+                                            <h:inputSecret class="form-control" id="pass" validatorMessage="Password: Longitud minima 5 caracteres" value="#{usuarios.password}" size="40" required="true" requiredMessage="Por favor introduzca la contraseña">
                                                 <f:validateLength for = "pass" minimum = "5"/>
                                             </h:inputSecret><br/>
                                             <a4j:commandButton action="#{usuarios.login}" value="Confirmar" render="mensajes" class="btn-reg btn btn-info" />
@@ -51,7 +51,6 @@
                             <div class="col-sm-1 col-xs-6 reg">  
                                 <h:form>
                                     <h:commandButton value="Registro" action="registro" class="btn btn-info"/>
-
                                 </h:form>
                             </div>
                         </c:when>
@@ -71,8 +70,6 @@
                                     <h:commandButton action="#{usuarios.cerrarSesion}" value="Cerrar Sesion" class="btn btn-info"/>
                                 </div>
                             </h:form>
-                                
-                            
                         </c:otherwise>
                     </c:choose>
                     </div>

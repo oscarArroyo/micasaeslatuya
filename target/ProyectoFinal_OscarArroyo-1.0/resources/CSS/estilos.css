@@ -7,6 +7,25 @@ and open the template in the editor.
     Created on : 15-mar-2017, 13:50:31
     Author     : Oscar
 */
+.rf-sel{
+    width: 100%;
+}
+.rf-sel-cntr{
+    height: 34px;
+}
+.rf-sel-btn{
+    height: 33px;
+}
+.rf-sel-btn-arrow{
+    margin-top: 9px;
+}
+.rf-sel-sel{
+    padding: 6px 12px;
+}
+.rf-sel-inp{
+   padding: 6px 12px;
+}
+
 .logo{
     margin-top: .5rem;
 }

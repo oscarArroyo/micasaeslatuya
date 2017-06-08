@@ -6,12 +6,17 @@
 package es.albarregas.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -23,7 +28,7 @@ import javax.persistence.Table;
 public class Preferencias implements Serializable{
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "IdPreferencia")
+    @Column(name = "idPreferencia")
     private int id;
 
     public int getId() {
@@ -43,5 +48,15 @@ public class Preferencias implements Serializable{
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    @Transient
+    private boolean seleccionado;
+
+    public boolean getSeleccionado() {
+        return seleccionado;
+    }
+
+    public void setSeleccionado(boolean seleccionado) {
+        this.seleccionado = seleccionado;
     }
 }

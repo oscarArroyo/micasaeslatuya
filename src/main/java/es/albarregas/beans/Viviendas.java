@@ -132,7 +132,4 @@ public class Viviendas implements Serializable{
         this.comentarios = comentarios;
     }
     
-    
-    
-    
 }

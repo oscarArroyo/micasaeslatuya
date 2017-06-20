@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <c:set var="ctx" value="#{pageContext.request.contextPath}"/>
+        <ui:define name="titulo">
+            <title>Panel del usuario #{usuario.email}</title>
+        </ui:define>
+    </h:head>
+    <h:body>
+        <ui:decorate template="/resources/plantillas/plantilla.xhtml">
+            <ui:define name="top">
+                <ui:include src="/resources/include/cabecera.xhtml"/>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="viv-pag col-sm-offset-2 col-sm-8 col-xs-12">
+                            <h3 class="text-center titulo-viv"> #{vivienda.viv.tipo} en #{vivienda.viv.localidad}</h3> 
+                            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    <c:set var="contador" value="0"/>
+                                    <c:forEach items="#{vivienda.img}" var="imagen">
+                                        <li data-target="#carousel-example-generic" data-slide-to="${contador}">
+                                            <c:set var="contador" value="${contador+1}"/> </li>
+                                    </c:forEach>
+                                </ol>
+                                <div class="carousel-inner" role="listbox">
+                                    <c:forEach items="#{vivienda.img}" var="imagen">
+                                        <div class="item">
+                                            <h:graphicImage class="imgslider" alt="prueba" url="#{ctx}/resources/imgViviendas/#{imagen.ruta}"/>
+                                        </div>
+                                    </c:forEach>                               
+                                </div>
+                                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                            <table class="table table-striped table-condensed text-center table-viv" >
+                                <tbody>
+                                    <tr>
+                                        <td> Caracteristicas </td>
+                                        <td> Tipo: <h:outputText value="#{vivienda.viv.tipo}"/><br/>
+                                            Dimensión : <h:outputText value="#{vivienda.viv.m2} m2" /><br/>
+                                            Habitaciones : <h:outputText value="#{vivienda.viv.habitaciones}"/><br/>
+                                            Baños : <h:outputText value="#{vivienda.viv.baños}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td> Extras:</td>
+                                        <td><c:forEach items="#{vivienda.listaPreferencias}" var="pref">
+                                                <c:if test="#{pref.seleccionado}">
+                                                    <h:outputText value="#{pref.nombre}"/><br/>
+                                                </c:if>
+                                            </c:forEach></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Descripción :</td>
+                                        <td><h:outputText value="#{vivienda.viv.comentarios}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ubicación :</td>
+                                        <td>Dirección: <h:outputText value="#{vivienda.viv.direccion}"/><br/>
+                                            Número:    <h:outputText value="#{vivienda.viv.numero}"/></td>
+                                    </tr>
+                                    <a4j:outputPanel rendered="#{usuario==null}">
+                                        <tr>
+                                            <td colspan="2">
+                                                <h4>Debes estar logueado para ponerte en contacto con este usuario</h4>
+                                            </td>
+                                        </tr>
+                                    </a4j:outputPanel>
+                                    <a4j:outputPanel rendered="#{usuario!=null}">
+                                    <tr>
+                                        <td colspan="2">
+                                            <h:form>
+                                                <h:commandButton class="btn" value="Contactar">
+                                                    <rich:componentControl target="popupContacto" operation="show" />
+                                                </h:commandButton>
+                                            </h:form>
+                                            <rich:popupPanel id="popupContacto" modal="true" height="350" width="600" resizeable="true" onmaskclick="#{rich:component('popupContacto')}.hide()">
+                                                <f:facet name="header">
+                                                    <h:outputText value="Contacto" />
+                                                </f:facet>
+                                                <f:facet name="controls">
+                                                    <h:outputLink value="#" onclick="#{rich:component('popupContacto')}.hide(); return false;" style="color: inherit">
+                                                        X
+                                                    </h:outputLink>
+                                                </f:facet>
+                                                <h:form>
+                                                    <div class="text-center">
+                                                        <h:outputLabel value="Mensaje"/>
+                                                        <h:inputTextarea class="form-control" required="true" value="#{vivienda.cto.mensaje}" requiredMessage="Por favor introduce el mensaje."
+                                                                         validatorMessage="Formato de email erroneo" cols="10" rows="10">
+
+                                                        </h:inputTextarea>
+                                                        <br/>
+                                                        <a4j:commandButton oncomplete="#{rich:component('popupContacto')}.hide(); return false;" action="#{vivienda.contacto}" value="Confirmar" class="btn-reg btn btn-info" />
+                                                    </div>
+                                                </h:form>
+                                            </rich:popupPanel>
+                                        </td>
+                                    </tr>
+                                    </a4j:outputPanel>
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    $(".carousel-indicators li:first").addClass("active");
+                    $(".carousel-inner .item:first").addClass("active");
+                </script>   
+            </ui:define>
+            <ui:define name="bottom">
+                <ui:include src="/resources/include/pie.xhtml"/>
+            </ui:define>
+        </ui:decorate>
+    </h:body>
+</html>

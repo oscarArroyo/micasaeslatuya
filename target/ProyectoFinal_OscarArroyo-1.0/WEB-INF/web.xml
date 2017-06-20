@@ -26,6 +26,10 @@
     <param-value>blueSky</param-value>
     </context-param>
     <context-param>
+        <param-name>com.sun.faces.enableRestoreView11Compatibility</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
         <param-name>createTempFiles</param-name>
         <param-value>true</param-value>
     </context-param>
@@ -33,5 +37,12 @@
         <param-name>maxRequestSize</param-name>
         <param-value>10000000</param-value>
     </context-param>
-    
+     <error-page>
+        <error-code>404</error-code>
+        <location>/resources/paginasError/error404.xhtml</location>
+    </error-page>
+    <!--<error-page>
+        <error-code>500</error-code>
+        <location>/resources/paginasError/error500.xhtml</location>
+    </error-page>-->
 </web-app>

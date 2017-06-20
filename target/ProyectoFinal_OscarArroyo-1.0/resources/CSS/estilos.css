@@ -7,6 +7,78 @@ and open the template in the editor.
     Created on : 15-mar-2017, 13:50:31
     Author     : Oscar
 */
+.list-viv{
+    font-family: Verdana;
+    font-size: 12pt;
+}
+.rf-dg{
+    width: 100%;
+}
+.ind-enc{
+    margin-top: 1rem;
+}
+.btn-ind{
+    margin-top: 1rem;
+}
+input.rf-au-inp{
+    height: 35px;
+    padding-left: 5px;
+}
+.inp-ind{
+    margin-top: 30px;
+    width: 80%;
+    margin-left: 5%;
+    height: 37px;
+    
+}
+.bus-ind{
+    text-align: center;
+    height: 200px;
+    background-color: white;
+    width: 60%;
+    margin-left: 20%;
+    margin-top: 150px;
+}
+.ind-back{
+    height: 500px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-size: cover;
+    background-image: url("../img/imgIndex.jpg");
+    
+}
+.head-list{
+    width: 100%;
+}
+.titulo-viv{
+    font-family: Verdana;
+}
+.table-viv{
+    margin-top: 1rem;
+    font: 12pt Verdana;
+}
+
+.imgslider{
+    max-height: 300px;
+    min-height: 500px;
+    margin: auto;
+    width: auto;
+}
+.carousel{
+    background-color: whitesmoke;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.9);
+}
+.viv-pag{
+    background-color: #f5f5f5;
+}
+.check-off{
+    background-image: url("../img/ico_checkbox_off.png");
+}
+
+.check-on{
+    background-image: url("../img/ico_checkbox_on.png");
+}
 .rf-sel{
     width: 100%;
 }

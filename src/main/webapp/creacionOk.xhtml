@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <h:head>
+
+        <ui:define name="titulo">
+            <title>Panel del usuario #{usuario.email}</title>
+        </ui:define>
+    </h:head>
+    <h:body>
+        <ui:decorate template="/resources/plantillas/plantilla.xhtml">
+            <ui:define name="top">
+                <ui:include src="/resources/include/cabecera.xhtml"/>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <h:form>
+                        <h1 class="text-center">La vivivenda se ha creado correctamente </h1>
+                        <h3 class="text-center">Haz click en el botón para ver su página </h3>
+                        <a4j:commandButton action="vivienda" value="Navegar" style=" margin-top: 1rem;margin-left: 47%" class="btn text-center"/>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+            <ui:define name="bottom">
+                <ui:include src="/resources/include/pie.xhtml"/>
+            </ui:define>
+        </ui:decorate>
+    </h:body>
+</html>

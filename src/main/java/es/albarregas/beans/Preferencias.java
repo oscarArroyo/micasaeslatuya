@@ -6,21 +6,19 @@
 package es.albarregas.beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
  *
  * @author Oscar
+ * @version 1
+ * Modelo Preferencias
  */
 @Entity
 @Table(name = "Preferencias")

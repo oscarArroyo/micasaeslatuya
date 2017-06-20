@@ -44,6 +44,7 @@ public class GenericoDAO<T> implements IGenericoDAO<T> {
 
     @Override
     public <T> List<T> get(String entidad) {
+        System.out.println("entidad "+entidad);
         List<T> listadoResultados = null;
         try {
             iniciaSesion();
@@ -95,5 +96,33 @@ public class GenericoDAO<T> implements IGenericoDAO<T> {
             this.cierraSesion();
         }
     }
+    @Override
+    public <T> List<T> getAll() {
+        List<T> listadoResultados = null;
+        try {
+            iniciaSesion();
+            listadoResultados = sesion.createQuery("select distinct p.nombre from Pueblos p").list();
+        } catch (HibernateException he) {
+            this.manejaExcepcion(he);
+        } finally {
+            this.cierraSesion();
+        }
+        return listadoResultados;
+    }
+
+    @Override
+    public Object getOneImagen(String entidad) {
+         Object objetoRecuperado = null;
+         try {
+            iniciaSesion();
+            objetoRecuperado = sesion.createQuery(entidad).uniqueResult();
+        } catch (HibernateException he) {
+            this.manejaExcepcion(he);
+        } finally {
+            this.cierraSesion();
+        }
+        return objetoRecuperado;
+    }
+    
 
 }

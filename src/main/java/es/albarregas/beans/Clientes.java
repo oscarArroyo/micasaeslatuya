@@ -22,6 +22,8 @@ import javax.persistence.Transient;
 /**
  *
  * @author Oscar
+ * @version 1
+ * Modelo Clientes
  */
 @ManagedBean
 @Entity
@@ -48,6 +50,7 @@ public class Clientes implements Serializable {
     @Transient
     private Clientes cliente;
 
+    
     public Clientes getCliente() {
         return cliente;
     }
@@ -114,12 +117,6 @@ public class Clientes implements Serializable {
         this.tlf = tlf;
     }
     
-   // @PostConstruct
-   /* public void init(){
-        System.out.println("Entro init");
-        FacesContext ctx = FacesContext.getCurrentInstance();
-        cliente = (Clientes)ctx.getExternalContext().getSessionMap().get("cliente");
-    }*/
     public void addDatos(){
         FacesContext ctx = FacesContext.getCurrentInstance();
         DAOFactory df = DAOFactory.getDAOFactory();

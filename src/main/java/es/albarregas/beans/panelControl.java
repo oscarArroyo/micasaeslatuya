@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -19,6 +18,7 @@ import javax.faces.context.FacesContext;
 /**
  *
  * @author Oscar
+ * @version 1
  */
 
 @ManagedBean(name = "panelControl")
@@ -69,13 +69,21 @@ public class panelControl implements Serializable{
     public void setPref(Preferencias pref) {
         this.pref = pref;
     }
+    /**
+     * Método de carga inicial de datos
+     */
     @PostConstruct
     public void init(){
         setListaPref(listado());
         setCheck(Boolean.FALSE);
         setPrefSeleccionadas(cargarPreferencias());
+        setPref(new Preferencias());
         setId(0);
     }
+    /**
+     * Método que inserta una preferencia que el usuario ha seleccionado o la borra
+     * @param id id de la preferencia seleccionada
+     */
     public void insertPreferenciasUsuario(int id){
         FacesContext ctx = FacesContext.getCurrentInstance();
         DAOFactory df = DAOFactory.getDAOFactory();
@@ -93,22 +101,30 @@ public class panelControl implements Serializable{
             prefCliente.setValor('s');
             prefCliente.setIdCliente(cli.getId());
             igd.add(prefCliente);
-            setPrefSeleccionadas(cargarPreferencias());
+            setListaPref(listado());
         }else{
             ArrayList<PrefCliente> borrarPref = (ArrayList<PrefCliente>)igd.get("PrefCliente where idCliente="+cli.getId()+" and idPreferencia="+id);
             igd.delete(borrarPref.get(0));
-            setPrefSeleccionadas(cargarPreferencias());
+            setListaPref(listado());
         }
     }
+ 
+    /**
+     * Método que carga las Preferencias de un usuario
+     * @return ArrayList
+     */
     public ArrayList<PrefCliente> cargarPreferencias(){
         DAOFactory df = DAOFactory.getDAOFactory();
         IGenericoDAO igd = df.getGenericoDAO();
         FacesContext ctx = FacesContext.getCurrentInstance();
         Clientes cli = (Clientes) ctx.getExternalContext().getSessionMap().get("cliente");
         ArrayList<PrefCliente> pc = (ArrayList<PrefCliente>)igd.get("PrefCliente pc where  pc.idCliente = "+cli.getId());
-        System.out.println("arrSize "+pc.size());
         return pc;
     }
+    /**
+     * Método que carga las Preferencias
+     * @return ArrayList
+     */
     public ArrayList<Preferencias> listado(){
         DAOFactory df = DAOFactory.getDAOFactory();
         IGenericoDAO igd = df.getGenericoDAO();
@@ -127,5 +143,13 @@ public class panelControl implements Serializable{
             }
         }
         return listado;
+    }
+    /**
+     *´Método que añade una nueva preferencia
+     */
+    public void addPreferencia(){
+        DAOFactory df = DAOFactory.getDAOFactory();
+        IGenericoDAO igd = df.getGenericoDAO();
+        igd.add(getPref());
     }
 }

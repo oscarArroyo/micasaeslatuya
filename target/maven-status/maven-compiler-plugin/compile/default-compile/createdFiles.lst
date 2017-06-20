@@ -3,9 +3,14 @@ es\albarregas\beans\Viviendas.class
 es\albarregas\beans\PrefCliente.class
 es\albarregas\dao\IGenericoDAO.class
 es\albarregas\daofactory\DAOFactory.class
+es\albarregas\beans\vivienda.class
 es\albarregas\beans\crearVivienda.class
 es\albarregas\beans\Imagenes.class
+es\albarregas\beans\listadoViviendas.class
 es\albarregas\persistencia\HibernateUtil.class
+es\albarregas\beans\Contacto.class
+es\albarregas\beans\PrefVivienda.class
+es\albarregas\beans\busqueda.class
 es\albarregas\beans\Clientes.class
 es\albarregas\beans\Pueblos.class
 es\albarregas\beans\panelControl.class

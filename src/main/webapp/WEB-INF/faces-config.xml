@@ -36,4 +36,28 @@
             <redirect/> 
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/crearVivienda.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{crearVivienda.addDatos}</from-action>
+            <to-view-id>/creacionOk.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/creacionOk.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>vivienda</from-outcome>
+            <to-view-id>/vivienda.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{busqueda.goListado}</from-action>
+            <from-outcome>listadoViviendas</from-outcome>
+            <to-view-id>/listadoViviendas.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

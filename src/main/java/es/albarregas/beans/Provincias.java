@@ -16,6 +16,8 @@ import javax.persistence.Table;
 /**
  *
  * @author Oscar
+ * @version 1
+ * Modelo Provincias
  */
 @Entity
 @Table(name = "Provincias")

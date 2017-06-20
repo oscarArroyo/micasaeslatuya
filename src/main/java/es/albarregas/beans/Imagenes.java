@@ -6,7 +6,6 @@
 package es.albarregas.beans;
 
 import java.io.Serializable;
-import java.sql.Blob;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +16,8 @@ import javax.persistence.Table;
 /**
  *
  * @author Oscar
+ * @version 1
+ * Modelo Imagenes
  */
 @Entity
 @Table(name = "Imagenes")
@@ -26,11 +27,10 @@ public class Imagenes implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "IdImagen")
     private int id;
-
     @Column(name = "IdVivienda", nullable = false)
     private int idV;
     @Column(nullable = false)
-    private Blob imagen;
+    private String ruta;
     @Column(nullable = false)
     private String tipoMime;
 
@@ -58,12 +58,12 @@ public class Imagenes implements Serializable {
         this.idV = idV;
     }
 
-    public Blob getImagen() {
-        return imagen;
+    public String getRuta() {
+        return ruta;
     }
 
-    public void setImagen(Blob imagen) {
-        this.imagen = imagen;
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
     }
 
  

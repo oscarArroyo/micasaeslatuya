@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <h:head>
+        <c:set var="ctx" value="#{pageContext.request.contextPath}"/>
+        <ui:define name="titulo">
+            <title>Indice</title>
+        </ui:define>
+    </h:head>
+    <h:body>
+        <ui:decorate template="/resources/plantillas/plantilla.xhtml">
+            <ui:define name="top">
+                <ui:include src="/resources/include/cabecera.xhtml"/>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+                            <c:if test="#{listadoViviendas.check}">
+                            <rich:panel>
+                                <f:facet name="header">
+                                    <h:outputText value="Listado de viviendas en #{bus}" />
+                                </f:facet>
+                                <h:form id="form">
+                                    <rich:dataGrid value="#{listadoViviendas.listaViviendas}" var="viv" columns="1" elements="10">
+                                         <div class="col-sm-12 col-xs-12">
+                                        <rich:panel  headerClass="head-list">
+                                            <f:facet name="header">
+                                                <h:outputText value="#{viv.tipo} en #{viv.localidad} " />
+                                            </f:facet>
+                                            <h:panelGrid class="text-center list-viv" rules="rows" columns="1">
+                                                    <h:graphicImage height="300" width="400" alt="imagen generica de un chalet" url="/resources/img/imgGenericaChalet.jpg" rendered="#{viv.tipo eq 'Chalet'}"/>
+                                                    <h:graphicImage height="300" width="400" alt="imagen generica de un atico" url="/resources/img/imgGenericaAtico.jpg" rendered="#{viv.tipo eq 'Ático'}"/>
+                                                    <h:graphicImage height="300" width="400" alt="imagen generica de una casa adosada" url="/resources/img/imgGenericaCasaAdosada.jpg" rendered="#{viv.tipo eq 'Casa adosada'}"/>
+                                                    <h:graphicImage height="300" width="400" alt="imagen generica de un duplex" url="/resources/img/imgGenericaDuplex.jpg" rendered="#{viv.tipo eq 'Dúplex'}"/>
+                                               
+                                                    <h:graphicImage height="300" width="400" alt="imagen generica de un estudio" url="/resources/img/imgGenericaEstudio.jpg" rendered="#{viv.tipo eq 'Estudio'}"/>
+                                                
+                                                    <h:graphicImage height="300" width="400" alt="imagen generica de un loft" url="/resources/img/imgGenericaLoft.jpg" rendered="#{viv.tipo eq 'Loft'}"/>
+         
+                                                    <h:graphicImage height="300" width="400" alt="imagen generica de un piso" url="/resources/img/imgGenericaPiso.jpg" rendered="#{viv.tipo eq 'Piso'}"/>
+                                                    <h:graphicImage height="300" width="400" alt="imagen generica de un Apartamento" url="/resources/img/imgGenericaApartamento.jpg" rendered="#{viv.tipo eq 'Apartamento'}"/>
+                                                    <h:outputLabel value="Descripcion: "/>
+                                                    <h:outputText value="#{viv.comentarios}"  />
+                                                
+                                                <h:outputText value="Baños: #{viv.baños}"  />
+                                                
+                                                <h:outputText value="Habitaciones:  #{viv.habitaciones}"/>
+                                                <a4j:commandButton class="btn" action="#{listadoViviendas.goVivienda(viv.id)}" value="Ver detalles"/>
+                                                
+                                            </h:panelGrid>
+                                        </rich:panel>
+                                        <f:facet  name="footer">
+                                            <rich:dataScroller style="width: 100%;" fastStep="3"/>
+                                        </f:facet>
+                                         </div>
+                                    </rich:dataGrid>
+                                </h:form>
+                            </rich:panel>
+                            </c:if>
+                                <c:if test="#{!listadoViviendas.check and mensaje==null}">
+                                    <div class="text-center">
+                                        <h3 class="titulo-viv">No se encuentra ninguna localidad con ese nombre</h3>
+                                    <h4 class="titulo-viv"> Por favor proceda a realizar otra busqueda</h4>
+                                    </div>
+                                </c:if>
+                            <a4j:outputPanel rendered="#{mensaje!=null}">
+                                <div style="margin-top: 2rem">
+                                <h3 class="text-center">#{mensaje}</h3>
+                                </div>
+                            </a4j:outputPanel>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+            <ui:define name="bottom">
+                <ui:include src="/resources/include/pie.xhtml"/>
+            </ui:define>
+        </ui:decorate>
+    </h:body>
+</html>

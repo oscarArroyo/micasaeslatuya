@@ -1,5 +1,6 @@
 C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\java\es\albarregas\daofactory\DAOFactory.java
 C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\java\es\albarregas\beans\Usuarios.java
+C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\java\es\albarregas\beans\listadoViviendas.java
 C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\java\es\albarregas\daofactory\MySQLDAOFactory.java
 C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\java\es\albarregas\beans\Preferencias.java
 C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\java\es\albarregas\dao\IGenericoDAO.java
@@ -10,7 +11,11 @@ C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\jav
 C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\java\es\albarregas\beans\crearVivienda.java
 C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\java\es\albarregas\beans\panelControl.java
 C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\java\es\albarregas\beans\Clientes.java
+C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\java\es\albarregas\beans\Contacto.java
+C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\java\es\albarregas\beans\PrefVivienda.java
+C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\java\es\albarregas\beans\busqueda.java
 C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\java\es\albarregas\beans\Viviendas.java
 C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\java\es\albarregas\persistencia\HibernateUtil.java
 C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\java\es\albarregas\beans\PrefCliente.java
+C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\java\es\albarregas\beans\vivienda.java
 C:\Users\Oscar\Documents\NetBeansProjects\ProyectoFinal_OscarArroyo\src\main\java\es\albarregas\dao\GenericoDAO.java

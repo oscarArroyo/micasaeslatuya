@@ -14,5 +14,9 @@ public interface IGenericoDAO<T> {
     public void update(T objeto);
 
     public void delete(T objeto);
+    
+    public <T> List<T> getAll();
+    
+    public <T> T getOneImagen(String entidad);
 
 }

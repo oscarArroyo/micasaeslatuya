@@ -31,6 +31,8 @@ import javax.persistence.Transient;
 /**
  *
  * @author Oscar
+ * @version 1
+ * Modelo Usuarios
  */
 @ManagedBean
 @Entity
@@ -55,7 +57,6 @@ public class Usuarios implements Serializable {
     @PrimaryKeyJoinColumn
     private Clientes cliente;
     
-    
     @Transient
     private String otraPass;
 
@@ -67,7 +68,6 @@ public class Usuarios implements Serializable {
         this.otraPass = otraPass;
     }
     
-
     public Clientes getCliente() {
         return cliente;
     }
@@ -123,19 +123,11 @@ public class Usuarios implements Serializable {
     public void setTipo(char tipo) {
         this.tipo = tipo;
     }
-
-    public void oneCliente() {
-        if (this.id > 0) {
-            DAOFactory df = DAOFactory.getDAOFactory();
-            IGenericoDAO igd = df.getGenericoDAO();
-            Usuarios usu = (Usuarios) igd.getOne(this.id, Usuarios.class);
-            this.id = usu.getId();
-            this.email = usu.getEmail();
-            this.password = usu.getPassword();
-        }
-
-    }
-
+    /**
+     * Método que se encarga de añadir un objeto Usuarios a la base de datos e incluirlo en la sesión. También se crea un registro en la tabla Clientes con el mismo id
+     * @return String
+     * @throws Exception 
+     */
     public String addDatos() throws Exception {
         FacesContext ctx = FacesContext.getCurrentInstance();
         DAOFactory df = DAOFactory.getDAOFactory();
@@ -163,7 +155,11 @@ public class Usuarios implements Serializable {
         }
        
     }
-
+    /**
+     * Método que realiza el login en la aplicación
+     * @throws IOException
+     * @throws Exception 
+     */
     public void login() throws IOException, Exception {
         FacesContext ctx = FacesContext.getCurrentInstance();
         DAOFactory df = DAOFactory.getDAOFactory();
@@ -179,25 +175,37 @@ public class Usuarios implements Serializable {
         }
 
     }
-
+    /**
+     * Método que cierra la sesión del usuario en la aplicacion y elimina los datos de esta.
+     * @throws IOException 
+     */
     public void cerrarSesion() throws IOException {
         FacesContext ctx = FacesContext.getCurrentInstance();
         ctx.getExternalContext().getSessionMap().remove("usuario");
         ctx.getExternalContext().getSessionMap().remove("cliente");
+        ctx.getExternalContext().getSessionMap().remove("bus");
         Utils.redirectUrlPeticion("/index.xhtml");
     }
 
     /**
-     *
-     * @return
+     * Método que navega al panel del usuario
+     * @return String
      */
     public String goPanel(){
       return "panelUsuario";
   
     }
+    /**
+     * Método que navega a la creación de una vivienda
+     * @return String 
+     */
     public String crearVivienda(){
     return "crearVivienda";
 }
+    /**
+     * Método que cambia la password de un usuario
+     * @throws Exception 
+     */
     public void cambioPass() throws Exception{
         FacesContext ctx = FacesContext.getCurrentInstance();
         DAOFactory df = DAOFactory.getDAOFactory();
@@ -207,14 +215,10 @@ public class Usuarios implements Serializable {
             usuSesion.setPassword(Utils.encode(this.getOtraPass()));
             igd.update(usuSesion);
             ctx.getExternalContext().getSessionMap().replace("usuario",getPassword(),this.getOtraPass());
-            clear();
             ctx.addMessage(null, new FacesMessage("Datos modificados correctamente"));
         }else{
             ctx.addMessage(null, new FacesMessage("La contraseña antigua no se corresponde con la indicada"));
         }
     }
-    public void clear(){
-        this.setOtraPass("");
-        this.setPassword("");
-    }
+   
 }

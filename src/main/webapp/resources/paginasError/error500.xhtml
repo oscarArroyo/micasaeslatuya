@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <h:head>
+
+        <ui:define name="titulo">
+            <title>Error 500</title>
+        </ui:define>
+    </h:head>
+    <h:body>
+        <ui:decorate template="../plantillas/plantilla.xhtml">
+            <ui:define name="top">
+                <ui:include src="../include/cabecera.xhtml"/>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <h1> Error 500 </h1>
+                        <h:graphicImage alt="error 500" url="/resources/img/imgError500"/>
+                    </div>
+                </div>
+            </ui:define>
+            <ui:define name="bottom">
+                <ui:include src="../include/pie.xhtml"/>
+            </ui:define>
+        </ui:decorate>
+    </h:body>
+</html>

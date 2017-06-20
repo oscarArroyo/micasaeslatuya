@@ -5,7 +5,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
     <h:head>
         <ui:define name="titulo">
             <title>Indice</title>
@@ -17,13 +18,55 @@
                 <ui:include src="/resources/include/cabecera.xhtml"/>
             </ui:define>
             <ui:define name="content">
-                <h2>Contenido de la página</h2>
-                <h3>index</h3>
-                <h:form>
-                <h:commandLink value="imagenes" action="imagenes"/>
-                </h:form>
-                <section>
-                </section>
+                <div class="container-fluid">
+                    <div class="row">
+                        <a4j:outputPanel id="mensaje-modal" rendered="#{busqueda.arrContacto.size()>0}">
+                            <div class="text-center" style="margin-bottom: 1rem;">
+                                <h:form>
+                                    <h:commandButton class="btn" value="Tienes mensajes sin leer">
+                                        <rich:componentControl target="popupMensajes" operation="show" />
+                                    </h:commandButton>
+                                </h:form>
+                                <rich:popupPanel id="popupMensajes" modal="true" height="435" width="500" resizeable="true" onmaskclick="#{rich:component('popupLg')}.hide()">
+                                    <f:facet name="header">
+                                        <h:outputText value="Mensajes" />
+                                    </f:facet>
+                                    <f:facet name="controls">
+                                        <h:outputLink value="#" onclick="#{rich:component('popupMensajes')}.hide(); return false;" style="color: inherit">
+                                            X
+                                        </h:outputLink>
+                                    </f:facet>
+                                    <h:form>
+                                        <a4j:repeat value="#{busqueda.arrContacto}" var="mensajes">
+                                            <h:outputLabel value="Fecha: "/><br/>
+                                            <h:outputText value="#{mensajes.fecha}"/><br/>
+                                            <h:outputLabel value="Mensaje: "/><br/>
+                                            <h:outputText value="#{mensajes.mensaje}"/><br/>
+                                            <hr/>
+                                        </a4j:repeat>
+                                        <div class="text-center">
+                                            <a4j:commandButton class="btn" oncomplete="#{rich:component('popupMensajes')}.hide(); return false;" value="Marcar Como leido" action="#{busqueda.borrarMensajes}" render="mensaje-modal"/>
+                                        </div>
+                                    </h:form>
+                                </rich:popupPanel>
+
+                            </div>
+                        </a4j:outputPanel>
+                        <div class="ind-back col-sm-12 col-xs-12">
+
+                            <div class="bus-ind">
+                                <h:form>
+                                    <div class="ind-btn">
+                                        <h4 class="ind-enc titulo-viv">Encuentra tu nueva casa donde quieras</h4>
+                                        <rich:autocomplete style="opacity: 1;" class="inp-ind"  mode="cachedAjax" minChars="3" autocompleteMethod="#{busqueda.autocomplete}" value="#{busqueda.bus}" autofill="true" /><br/>
+                                        <h:commandButton class="btn btn-ind" value="Buscar" action="#{busqueda.goListado()}"/><br/>
+                                        <h:outputText value="Ej: Mérida, Badajoz, Cáceres"/>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </ui:define>
             <ui:define name="bottom">
                 <ui:include src="/resources/include/pie.xhtml"/>

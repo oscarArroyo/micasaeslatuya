@@ -6,7 +6,6 @@
 package es.albarregas.beans;
 
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,8 +16,9 @@ import javax.persistence.Table;
 /**
  *
  * @author Oscar
+ * @version 1
+ * Modelo Preferencias del cliente
  */
-@ManagedBean
 @Entity
 @Table (name = "PrefCliente")
 public class PrefCliente implements Serializable{

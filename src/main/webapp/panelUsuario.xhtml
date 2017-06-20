@@ -33,17 +33,25 @@
                                             <h:form id="formularioClientes">
                                                 <h:messages id="mensajes" errorStyle="color:red; display:block" rendered="true"/>
                                                 <h:outputLabel value="NIF: "/><br/>
-                                                <h:inputText required="true" requiredMessage="Por favor, introduzca su NIF"  value="#{cliente.nif}" size="60"/><br/>
+                                                <h:inputText validatorMessage="Formato del nif erroneo" required="true" requiredMessage="Por favor, introduzca su NIF"  value="#{cliente.nif}" size="60">
+                                                    <f:validateRegex pattern="^\d{8}[A-Za-z]$"/>
+                                                    </h:inputText><br/>
                                                 <h:outputLabel value="Nombre: "/><br/>
-                                                <h:inputText required="true" requiredMessage="Por favor, introduzca su nombre" value="#{cliente.nombre}" size="60"/><br/>
+                                                <h:inputText validatorMessage="Formato del nombre erroneo" required="true" requiredMessage="Por favor, introduzca su nombre" value="#{cliente.nombre}" size="60">
+                                                    <f:validateRegex pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"/>
+                                                </h:inputText><br/>
                                                 <h:outputLabel  value="Primer apellido: "/><br/>
-                                                <h:inputText required="true" requiredMessage="Por favor, introduzca su primerApellido" value="#{cliente.ape1}" size="60"/><br/>
+                                                <h:inputText validatorMessage="Formato del primer apellido erroneo" required="true" requiredMessage="Por favor, introduzca su primer Apellido" value="#{cliente.ape1}" size="60">
+                                                    <f:validateRegex pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"/>
+                                                </h:inputText><br/>
                                                 <h:outputLabel value="Segundo apellido: "/><br/>
-                                                <h:inputText value="#{cliente.ape2}"  size="60"/><br/>
+                                                <h:inputText value="#{cliente.ape2}" validatorMessage="Formato del segundo apellido erroneo" size="60">
+                                                    <f:validateRegex pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"/>
+                                                </h:inputText><br/>
                                                 <h:outputLabel value="Teléfono: "/><br/>
-                                                <h:inputText required="true" requiredMessage="Por favor, introduzca su teléfono" value="#{cliente.tlf}" size="60"/><br/>
+                                                <h:inputText value="#{cliente.tlf}" size="60"/><br/>
                                                 <div class="pan-bot">
-                                                    <a4j:commandButton id="datos" action="#{clientes.addDatos}" render="mensajes" value="Enviar"/>
+                                                    <a4j:commandButton class="btn" id="datos" action="#{clientes.addDatos}" render="mensajes" value="Enviar"/>
                                                 </div>
                                             </h:form>
                                         </div>
@@ -59,7 +67,7 @@
                                                 <h:inputSecret required="true" requiredMessage="Por favor, introduzca su vieja contraseña" value="#{usuarios.password}"/><br/>
                                                 <h:outputLabel value="Introduce tu contraseña nueva"/><br/>
                                                 <h:inputSecret required="true" requiredMessage="Por favor, introduzca su nueva contraseña" value="#{usuarios.otraPass}"/><br/>
-                                                <a4j:commandButton id="passbtn" value="enviar" action="#{usuarios.cambioPass}" render="mensajes" />
+                                                <a4j:commandButton id="passbtn" class="btn" value="Enviar" action="#{usuarios.cambioPass}" render="mensajes" />
                                             </div>
                                         </h:form>
                                     </rich:accordionItem>
@@ -78,12 +86,25 @@
                                                             </h:panelGroup>
                                                         </f:facet>
                                                         <h:panelGrid id="prueba" columns="1">
-                                                            <a4j:commandButton style="margin-left: 7rem;" action="#{panelControl.insertPreferenciasUsuario(pref.id)}" image="#{pref.seleccionado ? '/resources/img/ico_checkbox_on.png' : '/resources/img/ico_checkbox_off.png'}" render="pan"/>
+                                                            <a4j:commandButton style="margin-left: 7rem;" action="#{panelControl.insertPreferenciasUsuario(pref.id)}" image="#{pref.seleccionado ? '/resources/img/ico_checkbox_on.png' : '/resources/img/ico_checkbox_off.png'}" execute="@form" render="pan"/>
                                                         </h:panelGrid>
                                                     </rich:panel>
                                             </a4j:repeat> 
                                         </h:form>
                                     </rich:accordionItem>
+                                    <rich:accordionItem rendered="#{usuario.tipo eq 'a'.charAt(0)}">
+                                        <f:facet name="header">
+                                            Añadir preferencia
+                                        </f:facet>
+                                        
+                                        <h:form class="text-center">
+                                            <h:outputLabel value="Nombre"/><br/>
+                                            <h:inputText value="#{panelControl.pref.nombre}"/><br/>
+                                            <div style="margin-top: 5px">
+                                                <a4j:commandButton class="btn" action="#{panelControl.addPreferencia}" value="Aceptar" render="preferencias"/>
+                                            </div>
+                                        </h:form>
+                                            </rich:accordionItem>
                                 </rich:accordion>
                             </h:form>
                         </div>
